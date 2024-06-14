@@ -220,14 +220,16 @@ fileButton.addEventListener('click', function () {
 });
 
 fileInput.addEventListener('change', function () {
-    const file = fileInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-            const fileContent = event.target.result;
-            ws.send(JSON.stringify({ type: 'sendfile', filename: file.name, filecontent: fileContent, sender: 1, id: clientId }));
-        };
-        reader.readAsDataURL(file);
+    if (clientId) {
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const fileContent = event.target.result;
+                ws.send(JSON.stringify({ type: 'sendfile', filename: file.name, filecontent: fileContent, sender: 1, id: clientId }));
+            };
+            reader.readAsDataURL(file);
+        }
     }
 });
 const imgButton = document.getElementById('image-button');
@@ -238,7 +240,7 @@ imgButton.addEventListener('click', function () {
 });
 
 imgInput.addEventListener('change', function () {
-    if (getCookie("userId")) {
+    if (clientId) {
         const file = imgInput.files[0];
         if (file) {
             const reader = new FileReader();
@@ -254,15 +256,15 @@ imgInput.addEventListener('change', function () {
 /*傳送文字*/
 document.querySelector('#send-text')?.addEventListener('click', (e) => {
     const sendText = document.getElementById('send-text');
-    if (sendText.innerHTML == "發送") {
+    if (sendText.innerHTML == "發送" && clientId) {
         const msg = document.querySelector('#messageInput');
         if (msg.value != "")
-            ws.send(JSON.stringify({ type: 'sendtext', text: msg?.value, sender: 0, id: getCookie("userId") }));
+            ws.send(JSON.stringify({ type: 'sendtext', text: msg?.value, sender: 0, id: clientId }));
         msg.value = "";
     }
 });
 document.addEventListener('keydown', function (event) {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && clientId) {
         const msg = document.querySelector('#messageInput');
         if (msg.value != "")
             ws.send(JSON.stringify({ type: 'sendtext', text: msg?.value, sender: 1, id: clientId }));
@@ -309,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const sendText = document.getElementById('send-text');
         if (!circle.classList.contains("record")) {
             if (voiceToggle.innerText === '切換成語音') {
-                if (ifget) {
+                if (ifget && clientId) {
                     ifget = false;
                     navigator.mediaDevices.getUserMedia({ audio: true })
                         .then(function (stream) {
@@ -419,7 +421,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 reader.onload = function (event) {
                     const img = document.createElement('img');
                     img.src = event.target.result;
-                    ws.send(JSON.stringify({ type: 'sendimg', img: img.src, sender: 1, id: clientId }));
+                    if (clientId)
+                        ws.send(JSON.stringify({ type: 'sendimg', img: img.src, sender: 1, id: clientId }));
                 };
                 reader.readAsDataURL(blob);
             }

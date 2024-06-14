@@ -385,7 +385,7 @@ wss.on('connection', (ws, req) => {
                             client.send(JSON.stringify({
                                 success: true,
                                 type: "updateimg",
-                                url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/img/${data.id}/${imgname}.${format}`,
+                                url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/record/${data.id}/${recordname}.opus`,
                                 sender: data.sender
                             }));
                         });

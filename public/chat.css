@@ -73,7 +73,7 @@ body {
     margin-bottom: 20px;
 }
 
-.user img {
+.avatar img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -86,18 +86,22 @@ body {
     border-radius: 10px;
 }
 
+.message-text img {
+    width: 20px;
+}
+
 .chat-img {
     background-color: #B8B8DC;
     padding: 10px;
     border-radius: 10px;
-    width: 300px;
+    width: 60%;
 }
 
 .chat-img-right {
     background-color: #00CACA;
     padding: 10px;
     border-radius: 10px;
-    width: 300px;
+    width: 60%;
 }
 
 .message-right {
@@ -106,7 +110,7 @@ body {
     justify-content: flex-end;
 }
 
-.avatar img {
+.user img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -134,10 +138,6 @@ body {
     border-radius: 5px;
     margin-bottom: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
-}
-
-.chat-footer input.record {
-    display: none;
 }
 
 .chat-actions {
@@ -283,6 +283,10 @@ body {
     max-height: 80%;
 }
 
+.expanded-img.hidden {
+    display: none;
+}
+
 .close {
     color: #fff;
     position: absolute;
@@ -360,6 +364,7 @@ p {
 #messageInput.hidden {
     display: none;
 }
+
 #emojiButton {
     font-size: 16px;
     cursor: pointer;
@@ -377,6 +382,7 @@ p {
     max-height: 300px;
     overflow-y: auto;
 }
+
 #emojiList.hidden {
     display: none;
 }
@@ -391,11 +397,13 @@ p {
     margin-top: 20px;
     font-size: 18px;
 }
+
 /* 手機樣式 */
 @media (max-width: 768px) {
     .container {
         width: 100%;
         height: 100vh;
+        overflow-y: auto;
         flex-direction: column;
     }
 
@@ -414,7 +422,7 @@ p {
     }
 
     .chat-section {
-        flex: none;
+        max-height: 800px;
         border-right: none;
         border-bottom: 1px solid #ddd;
     }
