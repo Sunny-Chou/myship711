@@ -26,30 +26,11 @@ const pool = new Pool({
 });
 const server = app.listen(PORT, () => console.log(`[Server] Listening on https://localhost:${PORT}`));
 const wss = new ServerSocket({ server });
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-/*function connectDatabase() {
-    const dbPath = path.resolve(__dirname, '7-11/7-11.db');
-    const db = new sqlite3.Database(dbPath);
-    return db;
-}
-function query(db, sql, params) {
-    return new Promise((resolve, reject) => {
-        db.all(sql, params, (err, rows) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(rows);
-            }
-        });
-    });
-}*/
 async function connectDatabase() {
     const client = await pool.connect();
     return client;
 }
 
-// 執行 SQL 查詢的函式
 async function query(client, sql, params) {
     const { rows } = await client.query(sql, params);
     return rows;
