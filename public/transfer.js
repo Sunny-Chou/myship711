@@ -1,4 +1,4 @@
-var ws = new WebSocket('ws://myship7-11.myvnc.com');
+var ws = new WebSocket('wss://myship-7-11.onrender.com');
 ws.onopen = function (event) {
     ws.send(JSON.stringify({ type: "getclient", userId: sessionStorage.getItem("userId") }));
 }

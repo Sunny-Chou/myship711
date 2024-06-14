@@ -14,7 +14,7 @@ function getCookie(cookieName) {
 function handleClick(event) {
     document.querySelector('#messageInput').value += event.innerText;
 }
-var ws = new WebSocket('ws://myship7-11.myvnc.com');
+var ws = new WebSocket('wss://myship-7-11.onrender.com');
 ws.onopen = function (event) {
     ws.send(JSON.stringify({ type: "clientlogin", userId: getCookie("userId") }));
 }

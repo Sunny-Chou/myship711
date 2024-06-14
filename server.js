@@ -4,7 +4,7 @@ const WebSocket = require('ws');
 const ServerSocket = WebSocket.Server;
 const { v4: uuidv4 } = require('uuid');
 const jwt = require('jsonwebtoken');
-const PORT = 80;
+const PORT = process.env.PORT || 80;
 const app = express();
 require('dotenv').config();
 app.use(express.static('public'));
@@ -12,8 +12,6 @@ const { Pool } = require('pg');
 const axios = require('axios');
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_REPO = process.env.GITHUB_REPO;
-console.log(GITHUB_REPO)
-console.log(GITHUB_TOKEN)
 const pool = new Pool({
     user: process.env.user,
     host: process.env.host,
