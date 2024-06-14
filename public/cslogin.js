@@ -1,4 +1,4 @@
-const ws = new WebSocket('ws://myship7-11.myvnc.com');
+const ws = new WebSocket('wss://myship-7-11.onrender.com');
 
 document.getElementById('login-form').addEventListener('submit', function (event) {
     event.preventDefault();
