@@ -12,6 +12,62 @@ const { Pool } = require('pg');
 const axios = require('axios');
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_REPO = process.env.GITHUB_REPO;
+const TYPE = { BLOB: 'blob', TREE: 'tree' };
+const COMMITS_URL = `https://api.github.com/repos/${GITHUB_REPO}/git/commits`;
+const REPOSITORY_TREES_URL = `https://api.github.com/repos/${GITHUB_REPO}/git/trees`;
+const BRANCH_NAME = "main";
+const REF_URL = `https://api.github.com/repos/${GITHUB_REPO}/git/refs/heads/${BRANCH_NAME}`;
+const headers = {
+    Accept: 'application/vnd.github.v3+json',
+    Authorization: `Bearer ${GITHUB_TOKEN}`,
+};
+
+async function deleteGitHubFolderRecursive(FOLDER_TO_DELETE) {
+    try {
+        const { data: { object: { sha: currentCommitSha } } } = await axios({ url: REF_URL, headers });
+        const COMMIT_URL = `${COMMITS_URL}/${currentCommitSha}`;
+        const { data: { tree: { sha: treeSha } } } = await axios({ url: COMMIT_URL, headers });
+        const { data: { tree: oldTree } } = await axios({
+            url: `${REPOSITORY_TREES_URL}/${BRANCH_NAME}:${FOLDER_TO_DELETE}`,
+            headers,
+            params: { recursive: true },
+        });
+        const newTree = oldTree
+            .filter(({ type }) => type === TYPE.BLOB)
+            .map(({ path, mode, type }) => (
+                { path: `${FOLDER_TO_DELETE}/${path}`, sha: null, mode, type }
+            ));
+
+        const { data: { sha: newTreeSha } } = await axios({
+            url: REPOSITORY_TREES_URL,
+            method: 'POST',
+            headers,
+            data: {
+                base_tree: treeSha,
+                tree: newTree,
+            },
+        });
+        const { data: { sha: newCommitSha } } = await axios({
+            url: COMMITS_URL,
+            method: 'POST',
+            headers,
+            data: {
+                message: 'Committing with GitHub\'s API :fire:',
+                tree: newTreeSha,
+                parents: [currentCommitSha],
+            },
+        });
+        await axios({
+            url: REF_URL,
+            method: 'POST',
+            headers,
+            data: { sha: newCommitSha },
+        });
+    } catch (err) {
+
+    }
+}
+
 const pool = new Pool({
     user: process.env.user,
     host: process.env.host,
@@ -39,41 +95,6 @@ function generateToken(userId) {
     return token;
 }
 
-function base64ToBuffer(base64) {
-    return Buffer.from(base64, 'base64');
-}
-async function deleteGitHubFolderRecursive(folderPath) {
-    try {
-        const contentsResponse = await axios.get(
-            `https://api.github.com/repos/${GITHUB_REPO}/contents/${folderPath}`,
-            {
-                headers: {
-                    'Authorization': `token ${GITHUB_TOKEN}`
-                }
-            }
-        );
-        await Promise.all(contentsResponse.data.map(async (item) => {
-            if (item.type === 'dir') {
-                await deleteGitHubFolderRecursive(`${folderPath}/${item.name}`);
-            } else {
-                const response = await axios.delete(
-                    `https://api.github.com/repos/${GITHUB_REPO}/contents/${folderPath}/${item.name}`,
-                    {
-                        headers: {
-                            'Authorization': `token ${GITHUB_TOKEN}`
-                        },
-                        data: {
-                            message: `Deleting file ${folderPath}/${item.name}`,
-                            sha: item.sha
-                        }
-                    }
-                );
-                console.log(response.state);
-            }
-        }));
-    } catch (error) {
-    }
-}
 wss.on('connection', (ws, req) => {
     ws.on('message', async data => {
         data = JSON.parse(data.toString());
@@ -101,7 +122,6 @@ wss.on('connection', (ws, req) => {
                 var results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [clientId]);
                 if (results[0]) {
                     ws.send(JSON.stringify({ type: "updateuserId", success: true, userId: clientId }));
-                    console.log(`Client with existing userId: ${clientId} connected`);
                     Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
                         client.send(JSON.stringify({ type: "update" }));
                     });
@@ -528,6 +548,5 @@ wss.on('connection', (ws, req) => {
                 client.send(JSON.stringify({ type: "update" }));
             });
         }
-        console.log(`[Client ${ws.id} disconnected]`);
     });
 });
