@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-ELEVEN 客服</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+    <div id="emojiList" class="hidden"></div>
+    <input type="file" id="fileInput" style="display: none;">
+    <input type="file" id="imgInput" accept="image/*" style="display: none;">
+    <div id="imageDialog" class="image-dialog">
+        <span class="close">&times;</span>
+        <img id="expandedImg" class="expanded-img">
+    </div>
+    <div class="container">
+        <div class="header">
+            <img src="index_files/1711682273.jpg" alt="7-ELEVEN" class="logo">
+            <span class="header-text">7-ELEVEN客服</span>
+        </div>
+        <div class="content">
+            <div class="chat-section">
+                <div id="chat-body">
+                    <div class="message-right">
+                        <div class="message-text-right">
+                            您好，7-ELEVEN客服很高興為您服務，請簡單描述您的問題，謝謝
+                        </div>
+                        <div class="avatar">
+                            <img src="index_files/avatar-admin2.png" alt="客服">
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-footer">
+                    <input type="text" id="messageInput" placeholder="請輸入訊息...">
+                    <div class="chat-actions">
+                        <div class="left-actions">
+                            <button id="emojiButton"><img src="index_files/smile.png" alt="表情"></button>
+                            <button id="image-button"><img src="index_files/photo.png" alt="圖片"></button>
+                            <button id="file-button"><img src="index_files/file.png" alt="圖片"></button>
+                        </div>
+                        <div class="right-actions">
+                            <button id="screenshot-button"><img src="index_files/screen.png" alt="截圖"></button>
+                            <span class="screenshot-text">怎樣發截圖？</span>
+                            <div id="screenshot-hint" style="display: none;">
+                                <button id="screenshot-toggle">在輸入訊息框中貼上圖片</button>
+                            </div>
+                            <button id="send-button" style="background-color: #00CACA;">
+                                <span id="send-text">發送</span>
+                                <span id="send-icon"><img src="index_files/up-menu.png"></span>
+                            </button>
+                            <div id="voice-select" style="display: none;">
+                                <button id="voice-toggle">切換成語音</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="circle-bg" class="hidden"><p id="circle-text">點選以進行錄音</p><div id="circle"></div></div>
+                </div>
+            </div>
+            <div class="faq-section">
+                <div class="faq-header">
+                    <h2>常見問題回覆</h2>
+                    <div class="faq-underline"></div>
+                </div>
+                <ul>
+                    <li onclick="handleClick(this)">麻煩您在此客服頁面留下您的姓名電話銀行名稱即可，感謝您的理解與配合！</li>
+                    <li onclick="handleClick(this)">已將您的資料傳真到您綁定的金融機構，我們7-Eleven購物全程委託金融機構簽署金流服務，稍後全由簽署專員跟您聯絡，過程大概30分鐘，請注意接聽來電！</li>
+                    <li onclick="handleClick(this)">您實名簽署辦理之後，我們收到金融機構辦理的憑證，即可正常交易。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="chat.js"></script>
+</body>
+</html>

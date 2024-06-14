@@ -1,0 +1,425 @@
+/* 基本樣式 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 900px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: #00CACA;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.header-text {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.content {
+    display: flex;
+    height: 500px;
+}
+
+.chat-section,
+.faq-section {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-section {
+    flex: 2;
+    border-right: 1px solid #ddd;
+}
+
+.faq-section {
+    flex: 1;
+}
+
+#chat-body {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.user img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.message-text {
+    background-color: #B8B8DC;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.chat-img {
+    background-color: #B8B8DC;
+    padding: 10px;
+    border-radius: 10px;
+    width: 300px;
+}
+
+.chat-img-right {
+    background-color: #00CACA;
+    padding: 10px;
+    border-radius: 10px;
+    width: 300px;
+}
+
+.message-right {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: flex-end;
+}
+
+.avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.message-text-right {
+    background-color: #00CACA;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.chat-footer {
+    display: flex;
+    flex-direction: column;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+}
+
+.chat-footer input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
+}
+
+.chat-footer input.record {
+    display: none;
+}
+
+.chat-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-actions,
+.right-actions {
+    display: flex;
+    align-items: center;
+}
+
+.left-actions button,
+.right-actions button {
+    background: none;
+    border: none;
+    margin: 0 2px;
+    cursor: pointer;
+}
+
+.right-actions .screenshot-text {
+    margin-left: 5px;
+}
+
+#send-button {
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+#send-text {
+    margin-right: 5px;
+}
+
+#send-icon {
+    border-left: 1px solid white;
+    padding-left: 5px;
+}
+
+#voice-select {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    right: -10px;
+    bottom: 40px;
+    z-index: 10;
+
+}
+
+#voice-select button {
+    background: none;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+#screenshot-hint {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    right: -10px;
+    bottom: 40px;
+    z-index: 10;
+    background: none;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.right-actions {
+    position: relative;
+}
+
+.faq-section h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+    background-color: #ffffff;
+    width: 50%;
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+.faq-header {
+    text-align: center;
+    display: flex;
+    background-color: #f1f1f1;
+    align-items: center;
+    position: relative;
+}
+
+.faq-underline {
+    width: 10%;
+    height: 2px;
+    background-color: #ddd;
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+}
+
+.faq-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.faq-section li {
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.image-dialog {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.expanded-img {
+    display: block;
+    margin: 0 auto;
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.close {
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 36px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #ccc;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#circle-bg {
+    background-color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#circle {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #ccc;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+#circle::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+}
+
+#circle.record {
+    border: 3px solid #06C655;
+    background-color: #06C655;
+}
+
+#circle.record::before {
+    background-color: white;
+    border-radius: 0;
+}
+
+#circle:hover {
+    transform: scale(1.1);
+}
+
+p {
+    color: #ababab;
+    font-weight: bolder;
+}
+
+#circle-bg.hidden {
+    display: none;
+}
+
+#messageInput.hidden {
+    display: none;
+}
+#emojiButton {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#emojiList {
+    display: block;
+    position: absolute;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: fit-content;
+    width: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+#emojiList.hidden {
+    display: none;
+}
+
+#emojiList img {
+    width: 25px;
+    margin: 2px;
+    cursor: pointer;
+}
+
+#selectedEmoji {
+    margin-top: 20px;
+    font-size: 18px;
+}
+/* 手機樣式 */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        height: 100vh;
+        flex-direction: column;
+    }
+
+    .header {
+        justify-content: center;
+    }
+
+    .content {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .chat-section,
+    .faq-section {
+        padding: 10px;
+    }
+
+    .chat-section {
+        flex: none;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .faq-section {
+        flex: none;
+    }
+}

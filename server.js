@@ -1,0 +1,553 @@
+const express = require('express');
+const crypto = require('crypto');
+const WebSocket = require('ws');
+const ServerSocket = WebSocket.Server;
+const { v4: uuidv4 } = require('uuid');
+const jwt = require('jsonwebtoken');
+const PORT = 80;
+const app = express();
+require('dotenv').config();
+app.use(express.static('public'));
+const { Pool } = require('pg');
+const axios = require('axios');
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_REPO = process.env.GITHUB_REPO;
+console.log(GITHUB_REPO)
+console.log(GITHUB_TOKEN)
+const pool = new Pool({
+    user: process.env.user,
+    host: process.env.host,
+    database: process.env.database,
+    password: process.env.password,
+    port: 5432,
+    ssl: {
+        rejectUnauthorized: false
+    }
+});
+const server = app.listen(PORT, () => console.log(`[Server] Listening on https://localhost:${PORT}`));
+const wss = new ServerSocket({ server });
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
+/*function connectDatabase() {
+    const dbPath = path.resolve(__dirname, '7-11/7-11.db');
+    const db = new sqlite3.Database(dbPath);
+    return db;
+}
+function query(db, sql, params) {
+    return new Promise((resolve, reject) => {
+        db.all(sql, params, (err, rows) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(rows);
+            }
+        });
+    });
+}*/
+async function connectDatabase() {
+    const client = await pool.connect();
+    return client;
+}
+
+// 執行 SQL 查詢的函式
+async function query(client, sql, params) {
+    const { rows } = await client.query(sql, params);
+    return rows;
+}
+function generateToken(userId) {
+    const payload = { userId };
+    const token = jwt.sign(payload, '第二組是彭彭和周周', { expiresIn: '9h' });
+    return token;
+}
+
+function base64ToBuffer(base64) {
+    return Buffer.from(base64, 'base64');
+}
+async function deleteGitHubFolderRecursive(folderPath) {
+    try {
+        const contentsResponse = await axios.get(
+            `https://api.github.com/repos/${GITHUB_REPO}/contents/${folderPath}`,
+            {
+                headers: {
+                    'Authorization': `token ${GITHUB_TOKEN}`
+                }
+            }
+        );
+        await Promise.all(contentsResponse.data.map(async (item) => {
+            if (item.type === 'dir') {
+                await deleteGitHubFolderRecursive(`${folderPath}/${item.name}`);
+            } else {
+                const response = await axios.delete(
+                    `https://api.github.com/repos/${GITHUB_REPO}/contents/${folderPath}/${item.name}`,
+                    {
+                        headers: {
+                            'Authorization': `token ${GITHUB_TOKEN}`
+                        },
+                        data: {
+                            message: `Deleting file ${folderPath}/${item.name}`,
+                            sha: item.sha
+                        }
+                    }
+                );
+            }
+        }));
+    } catch (error) {
+    }
+}
+wss.on('connection', (ws, req) => {
+    ws.on('message', async data => {
+        data = JSON.parse(data.toString());
+        console.log(`[Message from client ${ws.id}] data: `, data);
+        if (data.type === "sevicerlogin") {
+            const md5Hash = crypto.createHash('md5').update(data.password).digest('hex');
+            let db = await connectDatabase();
+            try {
+                const results = await query(db, 'SELECT * FROM 客服 WHERE 客服id = $1 AND 密碼 = $2', [data.userId, md5Hash]);
+                if (results[0]) {
+                    ws.send(JSON.stringify({ type: "sevicerlogin", success: true, userId: generateToken(data.userId) }));
+                    ws.admin = true;
+                } else {
+                    ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: '帳號密碼錯誤！' }));
+                }
+            } catch (error) {
+                ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: '連線資料庫時出現錯誤' }));
+            } finally {
+                db.release();
+            }
+        } else if (data.type === "clientlogin") {
+            let clientId = data.userId || uuidv4();
+            const db = await connectDatabase();
+            try {
+                var results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [clientId]);
+                if (results[0]) {
+                    ws.send(JSON.stringify({ type: "updateuserId", success: true, userId: clientId }));
+                    console.log(`Client with existing userId: ${clientId} connected`);
+                    Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                        client.send(JSON.stringify({ type: "update" }));
+                    });
+                    results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [clientId]);
+                    for (const r of results) {
+                        if (r['訊息種類id'] == 0) {
+                            ws.send(JSON.stringify({ type: "updatetext", success: true, text: r['訊息'], sender: r['發送者'] }));
+                        } else if (r['訊息種類id'] == 1) {
+                            ws.send(JSON.stringify({
+                                success: true,
+                                type: "updatefile",
+                                url: `http://myship7-11.myvnc.comhttps://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/file/${r['聊天室id']}/${r['訊息']}`,
+                                filename: r['訊息'],
+                                sender: r['發送者']
+                            }));
+                        } else if (r['訊息種類id'] == 2) {
+                            ws.send(JSON.stringify({
+                                success: true,
+                                type: "updateimg",
+                                url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/img/${r['聊天室id']}/${r['訊息']}`,
+                                sender: r['發送者']
+                            }));
+                        } else if (r['訊息種類id'] == 3) {
+                            ws.send(JSON.stringify({
+                                success: true,
+                                type: "updaterecord",
+                                url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/record/${r['聊天室id']}/${r['訊息']}`,
+                                sender: r['發送者']
+                            }));
+                        }
+                    }
+                } else {
+                    do {
+                        clientId = uuidv4();
+                    } while (results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [clientId])[0]);
+                    ws.send(JSON.stringify({ type: "updateuserId", success: true, userId: clientId }));
+                }
+            } catch (error) {
+                ws.send(JSON.stringify({ type: "updateuserId", success: false, message: '連線時出現錯誤' }));
+            } finally {
+                db.release();
+            }
+            ws.admin = false;
+            ws.id = clientId;
+        } else if (data.type === "sendtext") {
+            if (data.id) {
+                const db = await connectDatabase();
+                try {
+                    let results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
+
+                    if (!results[0]) {
+                        await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
+                        Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                            client.send(JSON.stringify({ type: "update" }));
+                        });
+                    }
+                    results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
+                    const count = results.length || 0;
+                    await query(db, 'INSERT INTO 聊天內容 (聊天內容id, 聊天室id, 訊息種類id, 訊息, 發送者) VALUES ($1,$2,$3,$4,$5)', [count, data.id, 0, data.text, data.sender]);
+                    ws.send(JSON.stringify({ type: "updatetext", success: true, text: data.text, sender: data.sender }));
+                    if (data.sender == 0) {
+                        results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
+                        if (results[0]['客服id']) {
+                            Array.from(wss.clients).filter(item => item.id == results[0]['客服id']).forEach((client) => {
+                                client.send(JSON.stringify({ type: "updatetext", success: true, text: data.text, sender: data.sender }));
+                            });
+                        }
+                    } else if (data.sender == 1) {
+                        Array.from(wss.clients).filter(item => item.id == data.id).forEach((client) => {
+                            client.send(JSON.stringify({ type: "updatetext", success: true, text: data.text, sender: data.sender }));
+                        });
+                    }
+                } catch (error) {
+                    ws.send(JSON.stringify({ type: "updatetext", success: false, message: '連線時出現錯誤' }));
+                } finally {
+                    db.release();
+                }
+            }
+        } else if (data.type === "sendfile") {
+            if (data.id) {
+                const dirPath = `public/file/${data.id}`;
+                const encodef = data.filecontent.match(/;([^,]+)/)[1];
+                const file = data.filecontent.split(',')[1];
+                const filePath = `${dirPath}/${data.filename}`;
+                if (encodef != "base64") {
+                    file = Buffer.from(file, encodef).toString('base64');
+                }
+                try {
+                    await axios.put(
+                        `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`,
+                        {
+                            message: '上傳檔案',
+                            content: file
+                        },
+                        {
+                            headers: {
+                                'Authorization': `token ${GITHUB_TOKEN}`,
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    );
+                } catch (error) {
+                }
+                const db = await connectDatabase();
+                try {
+                    let results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
+                    if (!results[0]) {
+                        await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
+                        Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                            client.send(JSON.stringify({ type: "update" }));
+                        });
+                    }
+
+                    results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
+                    const count = results.length;
+                    await query(db, 'INSERT INTO 聊天內容 (聊天內容id, 聊天室id, 訊息種類id, 訊息, 發送者) VALUES ($1, $2, $3, $4, $5)', [count, data.id, 1, data.filename, data.sender]);
+                    ws.send(JSON.stringify({
+                        success: true,
+                        type: "updatefile",
+                        url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/file/${data.id}/${data.filename}`,
+                        filename: data.filename,
+                        sender: data.sender
+                    }));
+                    if (data.sender == 0) {
+                        results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
+                        if (results[0]['客服id']) {
+                            Array.from(wss.clients).filter(item => item.id == results[0]['客服id']).forEach((client) => {
+                                client.send(JSON.stringify({
+                                    success: true,
+                                    type: "updatefile",
+                                    url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/file/${data.id}/${data.filename}`,
+                                    filename: data.filename,
+                                    sender: data.sender
+                                }));
+                            });
+                        }
+                    } else if (data.sender == 1) {
+                        Array.from(wss.clients).filter(item => item.id == data.id).forEach((client) => {
+                            client.send(JSON.stringify({
+                                success: true,
+                                type: "updatefile",
+                                url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/file/${data.id}/${data.filename}`,
+                                filename: data.filename,
+                                sender: data.sender
+                            }));
+                        });
+                    }
+                } catch (error) {
+                    ws.send(JSON.stringify({ type: "updatefile", success: false, message: '上傳檔案時出現錯誤' }));
+                } finally {
+                    db.release();
+                }
+            }
+        } else if (data.type === "sendimg") {
+            if (data.id) {
+                const imgname = new Date().getTime();
+                const dirPath = `public/img/${data.id}`;
+                const format = data.img.match(/\/([^;]+)/)[1];
+                const encodef = data.img.match(/;([^,]+)/)[1];
+                const img = data.img.split(',')[1];
+                const filePath = `${dirPath}/${imgname}.${format}`;
+                if (encodef != "base64") {
+                    img = Buffer.from(img, encodef).toString('base64');
+                }
+                try {
+                    await axios.put(
+                        `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`,
+                        {
+                            message: '上傳圖片',
+                            content: img
+                        },
+                        {
+                            headers: {
+                                'Authorization': `token ${GITHUB_TOKEN}`,
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    );
+                } catch (error) {
+                }
+                const db = await connectDatabase();
+                try {
+                    let results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
+                    if (!results[0]) {
+                        await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
+                        Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                            client.send(JSON.stringify({ type: "update" }));
+                        });
+                    }
+
+                    results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
+                    const count = results.length;
+                    await query(db, 'INSERT INTO 聊天內容 (聊天內容id, 聊天室id, 訊息種類id, 訊息, 發送者) VALUES ($1, $2, $3, $4, $5)', [count, data.id, 2, `${imgname}.${format}`, data.sender]);
+                    ws.send(JSON.stringify({
+                        success: true,
+                        type: "updateimg",
+                        url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/img/${data.id}/${imgname}.${format}`,
+                        sender: data.sender
+                    }));
+                    if (data.sender == 0) {
+                        results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
+                        if (results[0]['客服id']) {
+                            Array.from(wss.clients).filter(item => item.id == results[0]['客服id']).forEach((client) => {
+                                client.send(JSON.stringify({
+                                    success: true,
+                                    type: "updateimg",
+                                    url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/img/${data.id}/${imgname}.${format}`,
+                                    sender: data.sender
+                                }));
+                            });
+                        }
+                    } else if (data.sender == 1) {
+                        Array.from(wss.clients).filter(item => item.id == data.id).forEach((client) => {
+                            client.send(JSON.stringify({
+                                success: true,
+                                type: "updateimg",
+                                url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/img/${data.id}/${imgname}.${format}`,
+                                sender: data.sender
+                            }));
+                        });
+                    }
+                } catch (error) {
+                    ws.send(JSON.stringify({ type: "updateimg", success: false, message: '上傳圖片時出現錯誤' }));
+                } finally {
+                    db.release();
+                }
+            }
+        } else if (data.type === "sendrecord") {
+            if (data.id) {
+                const recordname = new Date().getTime();
+                const dirPath = `public/record/${data.id}`;
+                const filePath = `${dirPath}/${recordname}.opus`;
+                try {
+                    await axios.put(
+                        `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`,
+                        {
+                            message: '上傳錄音',
+                            content: data.record
+                        },
+                        {
+                            headers: {
+                                'Authorization': `token ${GITHUB_TOKEN}`,
+                                'Content-Type': 'application/json'
+                            }
+                        }
+                    );
+                } catch (error) {
+                }
+                const db = await connectDatabase();
+                try {
+                    let results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
+                    if (!results[0]) {
+                        await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
+                        Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                            client.send(JSON.stringify({ type: "update" }));
+                        });
+                    }
+
+                    results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
+                    const count = results.length;
+                    await query(db, 'INSERT INTO 聊天內容 (聊天內容id, 聊天室id, 訊息種類id, 訊息, 發送者) VALUES ($1, $2, $3, $4, $5)', [count, data.id, 3, `${recordname}.opus`, data.sender]);
+                    ws.send(JSON.stringify({
+                        success: true,
+                        type: "updaterecord",
+                        url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/record/${data.id}/${recordname}.opus`,
+                        sender: data.sender
+                    }));
+                    if (data.sender == 0) {
+                        results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
+                        if (results[0]['客服id']) {
+                            Array.from(wss.clients).filter(item => item.id == results[0]['客服id']).forEach((client) => {
+                                client.send(JSON.stringify({
+                                    success: true,
+                                    type: "updaterecord",
+                                    url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/record/${data.id}/${recordname}.opus`,
+                                    sender: data.sender
+                                }));
+                            });
+                        }
+                    } else if (data.sender == 1) {
+                        Array.from(wss.clients).filter(item => item.id == data.id).forEach((client) => {
+                            client.send(JSON.stringify({
+                                success: true,
+                                type: "updateimg",
+                                url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/img/${data.id}/${imgname}.${format}`,
+                                sender: data.sender
+                            }));
+                        });
+                    }
+                } catch (error) {
+                    ws.send(JSON.stringify({ type: "updateimg", success: false, message: '上傳圖片時出現錯誤' }));
+                } finally {
+                    db.release();
+                }
+            }
+        } else if (data.type === "getclient") {
+            jwt.verify(data.userId, '第二組是彭彭和周周', async (err, decoded) => {
+                if (err) {
+                    ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: "登入逾時，請重新登入" }));
+                } else {
+                    ws.id = decoded.userId;
+                    const db = await connectDatabase();
+                    try {
+                        var clientlist = [];
+                        const results = await query(db, 'SELECT * FROM 聊天室;');
+                        for (const r of results) {
+                            const temp = Array.from(wss.clients).filter(item => item.id == r['聊天室id']);
+                            if (r['客服id'] == ws.id && temp[0]) {
+                                clientlist.push({ id: r['聊天室id'], online: true, sevicer: r['客服id'] });
+                            } else if (r['客服id'] == ws.id) {
+                                clientlist.push({ id: r['聊天室id'], online: false, sevicer: r['客服id'] });
+                            } else if (temp[0]) {
+                                clientlist.push({ id: r['聊天室id'], online: true, sevicer: "" });
+                            } else {
+                                clientlist.push({ id: r['聊天室id'], online: false, sevicer: "" });
+                            }
+                        }
+                        ws.send(JSON.stringify({ type: "getclient", success: true, clients: clientlist }));
+                        ws.admin = true;
+                    } catch (error) {
+                        ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: error.message }));
+                    } finally {
+                        db.release();
+                    }
+                }
+            });
+        } else if (data.type == "transfer") {
+            jwt.verify(data.userId, '第二組是彭彭和周周', async (err, decoded) => {
+                if (err) {
+                    ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: "登入逾時，請重新登入" }));
+                } else {
+                    ws.id = decoded.userId;
+                    const db = await connectDatabase();
+                    try {
+                        var results = await query(db, 'SELECT * FROM 客服 WHERE 客服id = $1', [ws.id]);
+                        if (results[0]) {
+                            results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
+                            if (results[0]) {
+                                await query(db, 'UPDATE 聊天室 SET 客服id=$1 WHERE 聊天室id = $2', [ws.id, data.id]);
+                                results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
+                                for (const r of results) {
+                                    if (r['訊息種類id'] == 0) {
+                                        ws.send(JSON.stringify({ type: "updatetext", success: true, text: r['訊息'], sender: r['發送者'] }));
+                                    } else if (r['訊息種類id'] == 1) {
+                                        ws.send(JSON.stringify({
+                                            success: true,
+                                            type: "updatefile",
+                                            url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/file/${r['聊天室id']}/${r['訊息']}`,
+                                            filename: r['訊息'],
+                                            sender: r['發送者']
+                                        }));
+                                    } else if (r['訊息種類id'] == 2) {
+                                        ws.send(JSON.stringify({
+                                            success: true,
+                                            type: "updateimg",
+                                            url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/img/${r['聊天室id']}/${r['訊息']}`,
+                                            sender: r['發送者']
+                                        }));
+                                    } else if (r['訊息種類id'] == 3) {
+                                        ws.send(JSON.stringify({
+                                            success: true,
+                                            type: "updaterecord",
+                                            url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/img/${r['聊天室id']}/${r['訊息']}`,
+                                            sender: r['發送者']
+                                        }));
+                                    }
+                                }
+                                ws.admin = true;
+                                Array.from(wss.clients).filter(item => item.admin == true).forEach(client => {
+                                    client.send(JSON.stringify({ type: "update" }));
+                                });
+                            } else {
+                                ws.send(JSON.stringify({ type: "transfer.html", success: false, message: '客戶已不存在' }));
+                            }
+                        } else {
+                            ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: '登入逾時，請重新登入' }));
+                        }
+                    } catch (error) {
+                        ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: '連線資料庫時出現錯誤' }));
+                    } finally {
+                        db.release();
+                    }
+                }
+            });
+        } else if (data.type == "deleteClient") {
+            jwt.verify(data.userId, '第二組是彭彭和周周', async (err, decoded) => {
+                if (err) {
+                    ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: "登入逾時，請重新登入" }));
+                } else {
+                    ws.id = decoded.userId;
+                    const db = await connectDatabase();
+                    try {
+                        var results = await query(db, 'SELECT * FROM 客服 WHERE 客服id = $1', [ws.id]);
+                        if (results[0]) {
+                            results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
+                            if (results[0]) {
+                                await query(db, 'DELETE FROM 聊天內容 WHERE 聊天室id = $1;', [data.id]);
+                                await query(db, 'DELETE FROM 聊天室 WHERE 聊天室id = $1;', [data.id]);
+                                await deleteGitHubFolderRecursive(`public/img/${data.id}`);
+                                await deleteGitHubFolderRecursive(`public/file/${data.id}`);
+                                await deleteGitHubFolderRecursive(`public/record/${data.id}`);
+                                Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                                    client.send(JSON.stringify({ type: "update" }));
+                                });
+                            } else {
+                                ws.send(JSON.stringify({ type: "transfer.html", success: false, message: '客戶已不存在' }));
+                            }
+                        } else {
+                            ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: '登入逾時，請重新登入' }));
+                        }
+                    } catch (error) {
+                        ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: '連線資料庫時出現錯誤' }));
+                    } finally {
+                        db.release();
+                    }
+                }
+            });
+        }
+    });
+
+    ws.on('close', () => {
+        if (ws.admin == false) {
+            Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                client.send(JSON.stringify({ type: "update" }));
+            });
+        }
+        console.log(`[Client ${ws.id} disconnected]`);
+    });
+});
