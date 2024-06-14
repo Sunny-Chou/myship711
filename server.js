@@ -68,6 +68,7 @@ async function deleteGitHubFolderRecursive(folderPath) {
                         }
                     }
                 );
+                console.log(response.state);
             }
         }));
     } catch (error) {
@@ -384,7 +385,7 @@ wss.on('connection', (ws, req) => {
                         Array.from(wss.clients).filter(item => item.id == data.id).forEach((client) => {
                             client.send(JSON.stringify({
                                 success: true,
-                                type: "updateimg",
+                                type: "updaterecord",
                                 url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/record/${data.id}/${recordname}.opus`,
                                 sender: data.sender
                             }));
@@ -463,7 +464,7 @@ wss.on('connection', (ws, req) => {
                                         ws.send(JSON.stringify({
                                             success: true,
                                             type: "updaterecord",
-                                            url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/img/${r['聊天室id']}/${r['訊息']}`,
+                                            url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/record/${r['聊天室id']}/${r['訊息']}`,
                                             sender: r['發送者']
                                         }));
                                     }
