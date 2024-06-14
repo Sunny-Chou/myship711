@@ -259,7 +259,7 @@ document.querySelector('#send-text')?.addEventListener('click', (e) => {
     if (sendText.innerHTML == "發送" && clientId) {
         const msg = document.querySelector('#messageInput');
         if (msg.value != "")
-            ws.send(JSON.stringify({ type: 'sendtext', text: msg?.value, sender: 0, id: clientId }));
+            ws.send(JSON.stringify({ type: 'sendtext', text: msg?.value, sender: 1, id: clientId }));
         msg.value = "";
     }
 });
