@@ -1,0 +1,1 @@
+function gtag(){dataLayer.push(arguments)}var imported=document.createElement("script");imported.src="https://www.googletagmanager.com/gtag/js?id=G-HHQQBX5S27";imported.setAttribute("type","text/javascript");imported.async=!0;document.head.appendChild(imported);window.dataLayer=window.dataLayer||[];gtag("js",new Date);gtag("config","G-HHQQBX5S27")

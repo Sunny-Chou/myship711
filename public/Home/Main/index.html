@@ -1,0 +1,1632 @@
+<html>
+
+<head>
+    <title>7-ELEVEN賣貨便</title>
+    <!-- OG tag -->
+    <!-- 圖片暫時 -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <meta property="og:url" content="../../Home/Main">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="7-ELEVEN賣貨便">
+    <meta property="og:description" content="賣貨便提供社群平台上的賣家低門檻、快速、方便的開店接單方式，成交手續費0元，助攻賣家能快速投入網路銷售">
+    <meta property="og:image" content="/Images/MyShip/OG_image2.jpg">
+
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <meta name="description" content="賣貨便">
+    <meta name="keyword" content="拍賣,交貨便,C2C,金流,物流,平台">
+
+    <meta name="copyright" content="2024 President Chain Store Corporation">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="360">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" sizes="60x60" href="/Images/Main/ico/apple-icon-60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/Images/Main/ico/apple-icon-76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/Images/Main/ico/apple-icon-120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/Images/Main/ico/apple-icon-152.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+    <link
+        href="https://fonts.googleapis.com/css?family=Rubik:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i"
+        rel="stylesheet">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <!-- #region CSS Components, 加入 BundleConfig 裡面打包的名字, 迴圈 Render with local or S3 -->
+    <link href="../Styles/components/alertify.css?t=20230320165424" rel="stylesheet">
+
+    <!-- #endregion -->
+
+    <link href="../Styles/LayoutNew.css?t=20240223134838" rel="stylesheet">
+
+
+    <style>
+        .BBCSellerDisable {}
+    </style>
+
+    <style>
+        .btn-soclial-login-facebook {
+            background-color: #4267b2;
+        }
+
+        .btn-social-login-line {
+            background-color: #00C300;
+        }
+
+        .btn-social-login-google {
+            background-color: #003551;
+        }
+
+        @media only screen and (min-width: 960px) {
+            #loginModal {
+                top: 0;
+            }
+        }
+
+        #loginPartnerModal {
+            top: 100px;
+        }
+
+        #loginPartnerModal .modal-header {
+            padding: 5px 10px;
+            border-bottom: 1px solid #e5e5e5;
+            background-color: #FF6000;
+            color: #fff;
+            display: block;
+        }
+
+        #loginPartnerModal .modal-header .close {
+            height: auto;
+            background-color: transparent;
+            color: #fff;
+            float: right;
+        }
+
+        #loginPartnerModal .modal-header .modal-title {
+            color: #fff;
+        }
+
+        #loginPartnerModal .modal-body .login-op-logo {
+            display: block;
+            width: 250px;
+        }
+
+        #loginPartnerModal .modal-body .btn-login {
+            border: 0;
+            border-radius: 5px;
+            color: white;
+            height: 40px;
+            text-align: center;
+            width: 250px;
+            margin: 20px 0px;
+        }
+
+        #loginPartnerModal .modal-body .btn-login-op {
+            background: #FC5D28;
+        }
+
+        #loginPartnerModal .modal-body hr.social-login {
+            line-height: 1em;
+            position: relative;
+            outline: 0;
+            border: 0;
+            color: black;
+            text-align: center;
+            height: 1.5em;
+            opacity: .5;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #loginPartnerModal .modal-body hr.social-login:before {
+            content: '';
+            background: black;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+        }
+
+        #loginPartnerModal .modal-body hr.social-login:after {
+            content: attr(data-content);
+            position: relative;
+            display: inline-block;
+            color: black;
+            padding: 0 .5em;
+            line-height: 1.5em;
+            color: black;
+            background-color: #fcfcfa;
+        }
+
+        @media only screen and (min-width: 960px) {
+            #loginPartnerModal {
+                top: 0;
+            }
+        }
+    </style>
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-HHQQBX5S27" type="text/javascript" async=""></script>
+</head>
+
+<body class="home ">
+    <div class="cs-l-container">
+        <div class="marginTopSpace"></div>
+        <div class="o-menuMask"></div>
+        <header class="header BBCSellerDisable">
+            <div class="pc-head">
+                <div class="pc-head-content">
+                    <div class="logos">
+                        <div class="logo">
+                            <a><img src="../Images/7-eleven_logo.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="auth">
+                        <button id="login_button">
+                            <a href="#loginModal" data-target="#loginModal" data-toggle="modal"
+                                class="header-small-btn ">
+                                <i class="bx bx-user iconLogin"></i>登入
+                            </a>
+                        </button>
+                        <button>
+                            <a class="header-small-btn active">
+                                註冊
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="l-mobileHeader l-mobileHeader--transparent">
+                <div class="l-mobileHeader__container">
+                    <div class="wrap clearfix">
+                        <div class="l-mobileHeader__logo">
+                            <a style="height: 30px;">
+                                <img src="../Images/7-eleven_logo.svg" alt="" class="seven-logo" style="height: 100%;">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav class="l-menu">
+                <div class="l-menu__container">
+                    <ul class="c-menuLv1">
+                        <li>
+                            <a class="c-menuLv1__name">
+                                功能教學
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#step2-block" id="cool" class="c-menuLv1__name cs-o-link hidden-phone">
+
+                                特色功能
+                            </a>
+                        </li>
+                        <li>
+                            <a class="c-menuLv1__name">
+
+                                最新資訊
+                            </a>
+                        </li>
+                        <li>
+                            <a class="c-menuLv1__name" target="_blank">
+                                詐騙申報
+                            </a>
+                        </li>
+                        <li>
+                            <a class="c-menuLv1__name">
+                                社群e學院
+                            </a>
+                        </li>
+                        <li>
+
+                            <a class="c-menuLv1__name">
+                                幫助中心
+                            </a>
+                        </li>
+                        <li class="go_sell hidden-phone">
+                            <a target="_blank" class="c-menuLv1__name">
+                                <img src="../Images/sell_logo.png" alt="" class="sell_logo">去交貨便
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+                    <div id="mobile_menu_login">
+                        <div class="mobile-login-btn ">
+                            <div>
+                                <a href="#loginModal" data-toggle="modal" data-html="true" data-placement="top"
+                                    data-target="#loginModal" class="header-small-btn ">
+                                    <i class="bx bx-user iconLogin"></i>登入
+                                </a>
+                            </div>
+                            <div>
+                                <a class="header-small-btn active">
+                                    註冊
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </nav>
+        </header>
+        <main class="cs-l-main">
+
+
+            <div class="global-alert">
+                <div class="global-alert-wrapper container">
+                    <button type="button" class="close closeBtn" data-dismiss="alert" aria-label="Close">
+                        <i class="bx bx-x"></i>
+                    </button>
+                    <div class="d-flex align-items-start">
+                        <span class="badge">公告事項</span>
+                        <marquee direction="left" scrollamount="5">
+                            <span>賣貨便將於2024年06月18日(二)06:00 AM~10:00 AM 執行維護作業，無法登入及使用，造成您的不便，敬請見諒。</span>
+                        </marquee>
+                    </div>
+                </div>
+            </div>
+            <!-- sliderBar-->
+            <nav class="side-nav" id="side-nav">
+                <ul class="alignment">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <div class="scaling-svg-container">
+                                <i class="bx bx-news"></i>
+                                <div class="hover"><span>最新消息</span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <div class="scaling-svg-container">
+                                <i class="bx bx-help-circle"></i>
+                                <div class="hover"><span>幫助中心</span></div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <div class="scaling-svg-container">
+                                <i class="bx bx-rocket"></i>
+                                <div class="hover"><span>功能教學</span></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="#loginModal" data-toggle="modal" data-html="true" data-placement="top"
+                            data-target="#loginModal" class="nav-link">
+                            <div class="scaling-svg-container">
+                                <i class="bx bx-user-circle"></i>
+                                <div class="hover"><span>用戶中心</span></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <section class="head">
+                <div class="content">
+                    <div class="swiper">
+                        <div class="swiper-container swiper-initialized swiper-horizontal swiper-pointer-events"
+                            id="head-swiper">
+                            <div class="swiper-wrapper" id="swiper-wrapper-89e9f7f7abc3f426" aria-live="off"
+                                style="transition-duration: 0ms; transform: translate3d(-7700px, 0px, 0px);">
+                                <div class="swiper-slide swiper-slide-duplicate-active" data-swiper-slide-index="0"
+                                    role="group" aria-label="1 / 10" style="width: 680px; margin-right: 20px;">
+                                    <a style="background-image: url(../i/Home/ysu1m/20240604205746.jpg)"
+                                        target="_parent"></a>
+
+                                </div>
+                                <div class="swiper-slide" data-swiper-slide-index="1" role="group" aria-label="2 / 10"
+                                    style="width: 680px; margin-right: 20px;">
+                                    <a style="background-image: url(../i/Home/obh4u/20240529220325.jpg)"
+                                        target="_parent"></a>
+
+                                </div>
+                                <div class="swiper-slide" data-swiper-slide-index="2" role="group" aria-label="3 / 10"
+                                    style="width: 680px; margin-right: 20px;">
+                                    <a style="background-image: url(../i/Home/niuxo/20240529220157.png)"
+                                        target="_parent"></a>
+
+                                </div>
+                                <div class="swiper-slide" data-swiper-slide-index="3" role="group" aria-label="4 / 10"
+                                    style="width: 680px; margin-right: 20px;">
+                                    <a style="background-image: url(../i/Home/r1m2n/20240520135205.jpg)"
+                                        target="_blank"></a>
+
+                                </div>
+                                <div class="swiper-slide" data-swiper-slide-index="4" role="group" aria-label="5 / 10"
+                                    style="width: 680px; margin-right: 20px;">
+                                    <a style="background-image: url(../i/Home/nob2a/20240501184622.jpg)"
+                                        target="_parent"></a>
+
+                                </div>
+                                <div class="swiper-slide" data-swiper-slide-index="5" role="group" aria-label="6 / 10"
+                                    style="width: 680px; margin-right: 20px;">
+                                    <a style="background-image: url(../i/Home/ehh1k/20240408115650.jpg)"
+                                        target="_blank"></a>
+
+                                </div>
+                                <div class="swiper-slide" data-swiper-slide-index="6" role="group" aria-label="7 / 10"
+                                    style="width: 680px; margin-right: 20px;">
+                                    <a target="_blank"></a>
+
+                                </div>
+                                <div class="swiper-slide" data-swiper-slide-index="7" role="group" aria-label="8 / 10"
+                                    style="width: 680px; margin-right: 20px;">
+                                    <a style="background-image: url(../i/Home/zfkzu/20230702213934.jpg)"
+                                        target="_parent"></a>
+
+                                </div>
+                                <div class="swiper-slide" data-swiper-slide-index="8" role="group" aria-label="9 / 10"
+                                    style="width: 680px; margin-right: 20px;">
+                                    <a style="background-image: url(../i/Home/xxg3i/20230610121807.jpg)"
+                                        target="_blank"></a>
+
+                                </div>
+                                <div class="swiper-slide swiper-slide-prev swiper-slide-duplicate-next"
+                                    data-swiper-slide-index="9" role="group" aria-label="10 / 10"
+                                    style="width: 680px; margin-right: 20px;">
+                                    <a style="background-image: url(../i/Home/y3ey4/20230803223337.jpg)"
+                                        target="_blank"></a>
+
+                                </div>
+
+                            </div>
+                            <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"
+                                id="head-swiper-pagination"><span
+                                    class="swiper-pagination-bullet swiper-pagination-bullet-active"
+                                    aria-current="true"></span><span class="swiper-pagination-bullet"></span><span
+                                    class="swiper-pagination-bullet"></span><span
+                                    class="swiper-pagination-bullet"></span><span
+                                    class="swiper-pagination-bullet"></span><span
+                                    class="swiper-pagination-bullet"></span><span
+                                    class="swiper-pagination-bullet"></span><span
+                                    class="swiper-pagination-bullet"></span><span
+                                    class="swiper-pagination-bullet"></span><span
+                                    class="swiper-pagination-bullet"></span></div>
+                            <div class="swiper-buttons">
+                                <div class="swiper-button-prev head-swiper-prev" tabindex="0" role="button"
+                                    aria-label="Previous slide" aria-controls="swiper-wrapper-89e9f7f7abc3f426">
+                                    <i class="bx bx-chevron-left"></i>
+                                </div>
+                                <div class="swiper-button-next head-swiper-next" tabindex="0" role="button"
+                                    aria-label="Next slide" aria-controls="swiper-wrapper-89e9f7f7abc3f426">
+                                    <i class="bx bx-chevron-right"></i>
+                                </div>
+                            </div>
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                        </div>
+                    </div>
+                    <div class="top-news">
+                        <a href="#loginModal" id="seller_area" data-toggle="modal" data-html="true" data-placement="top"
+                            data-target="#loginModal" class="news" style=""></a>
+
+
+                        <a href="#loginPartnerModal" id="life_circle" data-toggle="modal" data-html="true"
+                            data-placement="top" data-target="#loginPartnerModal" class="news"></a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="recommended">
+                <div class="content">
+                    <div class="section-title star">
+                        本月推薦
+                    </div>
+                    <ul class="nav" role="tablist">
+                        <li class="tab">
+                            <a class="active" data-toggle="tab" href="#goods1" role="tab" aria-selected="aria-selected">
+                                熱銷排行
+                            </a>
+                        </li>
+                        <li class="tab">
+                            <a class="" data-toggle="tab" href="#goods2" role="tab">
+                                新進排行
+                            </a>
+                        </li>
+                        <li class="tab">
+                            <a class="" data-toggle="tab" href="#goods3" role="tab">
+                                強打推薦
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active fadeIn animated" id="goods1" role="tabpanel">
+                            <div class="swiper">
+                                <div class="swiper-container swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden swiper-grid"
+                                    id="hot-goods-1">
+                                    <div class="swiper-wrapper" id="swiper-wrapper-5c510bf57aa7c9e57" aria-live="polite"
+                                        style="width: 1200px;">
+                                        <div class="swiper-slide good swiper-slide-active" role="group"
+                                            aria-label="1 / 10" style="width: 220px; margin-right: 20px;">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405075838089/2405070269825986.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking1.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">童裝</div>
+                                                <div class="good-name">女童套裝</div>
+                                                <div class="good-price">NT$ 200</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good swiper-slide-next" role="group"
+                                            aria-label="2 / 10" style="width: 220px; margin-right: 20px;">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405025551973/2405020267423303.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking2.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">麥爾絲雜貨店</div>
+                                                <div class="good-name">蠟筆小新手機支架</div>
+                                                <div class="good-price">NT$ 85</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good" role="group" aria-label="3 / 10"
+                                            style="width: 220px; margin-right: 20px;">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2404204899017/2404200262503862.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking3.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">寶寶食驗室 BabyLab</div>
+                                                <div class="good-name">一口饅頭</div>
+                                                <div class="good-price">NT$ 100</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good" role="group" aria-label="4 / 10"
+                                            style="width: 220px; margin-right: 20px;">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2404225011831/2404230263779120.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking4.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">【食嚐玩料理｜苦茶油酸豆辣椒】</div>
+                                                <div class="good-name">★苦茶油酸豆辣椒★五辛素</div>
+                                                <div class="good-price">NT$ 250</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good" role="group" aria-label="5 / 10"
+                                            style="width: 220px; margin-right: 20px;">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2304147281703/2304140134551550.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking5.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">花蓮地表最強蛋黃酥專區</div>
+                                                <div class="good-name">蛋黃酥 3 顆 條裝</div>
+                                                <div class="good-price"><span>NT$ 220</span>
+                                                    <del id="oldprice" style="color: #727E8C"> <span
+                                                            class="oldprice">NT$255</span> </del>
+                                                </div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good" role="group" aria-label="6 / 10"
+                                            style="width: 220px; margin-top: 20px; margin-right: 20px;">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405126137651/2405120271951306.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">瀞林茗茶｜一杯茶，一段旅程</div>
+                                                <div class="good-name">《簡約手提茶包組》各項單品自選4入，請以4入為一組下單 （附贈 世界風景照）</div>
+                                                <div class="good-price">NT$ 40</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good" role="group" aria-label="7 / 10"
+                                            style="width: 220px; margin-top: 20px; margin-right: 20px;">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405206564097/2406110285421720.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">長沅水產</div>
+                                                <div class="good-name">南方澳 午仔魚</div>
+                                                <div class="good-price">NT$ 220</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good" role="group" aria-label="8 / 10"
+                                            style="width: 220px; margin-top: 20px; margin-right: 20px;">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405286991507/2406100284486045.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">杯豆咖啡Baddog Coffee自家烘焙精品咖啡豆</div>
+                                                <div class="good-name">衣索比亞 古吉 夏奇索 水洗 淺烘焙</div>
+                                                <div class="good-price">NT$ 450</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good" role="group" aria-label="9 / 10"
+                                            style="width: 220px; margin-top: 20px; margin-right: 20px;">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405136194305/2405210276196633.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">烤男十凍</div>
+                                                <div class="good-name">烤男十凍-獨家二節翅12隻入</div>
+                                                <div class="good-price">NT$ 210</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good" role="group" aria-label="10 / 10"
+                                            style="width: 220px; margin-top: 20px; margin-right: 20px;">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2406037345070/2406040282197108.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">古意人精品咖啡</div>
+                                                <div class="good-name">衣索比亞 西達瑪 阿貝果娜 日曬（淺焙）</div>
+                                                <div class="good-price">NT$ 460</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal swiper-pagination-lock"
+                                        id="hot-goods-1-pagination"><span
+                                            class="swiper-pagination-bullet swiper-pagination-bullet-active"
+                                            aria-current="true"></span></div>
+                                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane  fadeIn animated" id="goods2" role="tabpanel">
+                            <div class="swiper">
+                                <div class="swiper-container swiper-initialized swiper-horizontal swiper-pointer-events"
+                                    id="hot-goods-2">
+                                    <div class="swiper-wrapper" id="swiper-wrapper-7c81f93ac80bb55b" aria-live="polite"
+                                        style="transition-duration: 0ms;">
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405276943059/2405280279157130.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking1.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">瑞穗山下的厝溫泉民宿</div>
+                                                <div class="good-name">瑞穗山下的厝磅蛋糕禮盒組</div>
+                                                <div class="good-price">NT$ 599</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405216622754/2405210276105398.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking2.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">圓通食品 保健養生 主食 解凍即食 下酒菜</div>
+                                                <div class="good-name">婆婆媽媽手工冷凍水餃</div>
+                                                <div class="good-price">NT$ 4</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2406017214915/2406030281898888.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking3.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">健康毛食堂 Good Chews </div>
+                                                <div class="good-name">天然寵物零食│脫水乾燥-帶毛兔腳-貓狗生食</div>
+                                                <div class="good-price"><span>NT$ 160</span>
+                                                    <del id="oldprice" style="color: #727E8C"> <span
+                                                            class="oldprice">NT$250</span> </del>
+                                                </div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2404023907199/2404020255157984.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking4.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">小獅王</div>
+                                                <div class="good-name">小獅王好樂飲PPSU防漏滑蓋學習水杯</div>
+                                                <div class="good-price"><span>NT$ 490</span>
+                                                    <del id="oldprice" style="color: #727E8C"> <span
+                                                            class="oldprice">NT$792</span> </del>
+                                                </div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2403122751224/2405300280265133.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking5.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">Ynwn Shop</div>
+                                                <div class="good-name">【預購】LISA同款RAVIPA許願手鍊-三面神（勿直接下單
+                                                    請先私訊IG詢問⮕@_ynwn_）</div>
+                                                <div class="good-price">NT$ 2290</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2406037337629/2406040282215108.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">阿樂樂代X山嶼樂甜</div>
+                                                <div class="good-name">稻梗煙燻奶油</div>
+                                                <div class="good-price">NT$ 300</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405256858817/2406130286606875.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">針織花</div>
+                                                <div class="good-name">針織花束-藍黃</div>
+                                                <div class="good-price">NT$ 100</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405246792365/2405310280442781.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">CHUCHUCAT </div>
+                                                <div class="good-name">格子開衩裙</div>
+                                                <div class="good-price">NT$ 1280</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405146225886/2405140272952211.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">
+                                                    《莯心》來自一間有溫度的甜點店，沒有華麗的裝飾外表，但所有商品都是由師傅用心、細心、深入研究。</div>
+                                                <div class="good-name">金磚費南雪</div>
+                                                <div class="good-price"><span>NT$ 399</span>
+                                                    <del id="oldprice" style="color: #727E8C"> <span
+                                                            class="oldprice">NT$450</span> </del>
+                                                </div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405236742713/2406070283669974.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">萌糖手作CuteTang Handmade</div>
+                                                <div class="good-name">萌糖手作｜幻想花園兔愛麗絲藍兔耳披風款 氣質 寵物領巾 寵物脖圍 寵物項圈 寵物配件
+                                                    ins風 熱銷 手工訂製 寵物客製</div>
+                                                <div class="good-price">NT$ 500</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"
+                                        id="hot-goods-2-pagination"></div>
+                                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane  fadeIn animated" id="goods3" role="tabpanel">
+                            <div class="swiper">
+                                <div class="swiper-container swiper-initialized swiper-horizontal swiper-pointer-events"
+                                    id="hot-goods-3">
+                                    <div class="swiper-wrapper" id="swiper-wrapper-643f119794410d425" aria-live="polite"
+                                        style="transition-duration: 0ms;">
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2403142889726/2403140247670658.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking1.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">愛瑪式私廚手作</div>
+                                                <div class="good-name">仙女的漢堡排</div>
+                                                <div class="good-price"><span>NT$ 75</span>
+                                                    <del id="oldprice" style="color: #727E8C"> <span
+                                                            class="oldprice">NT$85</span> </del>
+                                                </div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2312188425244/2312280218423089.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking2.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">日日春油飯冷凍專區</div>
+                                                <div class="good-name">真空冷凍油飯</div>
+                                                <div class="good-price">NT$ 170</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2404144557918/2406080284145343.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking3.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">Coffee Flash 快閃咖啡</div>
+                                                <div class="good-name">快閃濃縮咖啡包</div>
+                                                <div class="good-price">NT$ 600</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2009172158532/2404290266699512.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking4.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">薆田。養生茶包-藥膳 泡腳澡中藥包</div>
+                                                <div class="good-name">進口西洋花草50g-玫瑰 薰衣草 紫錐菊 西洋蓍草 香蜂草 貞節果 杜松果 玫瑰果
+                                                    聖約翰草 奧勒岡 藥蜀葵 等</div>
+                                                <div class="good-price">NT$ 550</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405136168829/2405130272552658.jpg);">
+                                                <div class="good-ranking"
+                                                    style="background-image: url(../Images/good-ranking5.svg)">
+                                                </div>
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">鴨寨夫人特色滷味</div>
+                                                <div class="good-name">鴨寨夫人滷味專賣『特色菜』-無骨鳳爪（五香/蒜味/麻辣）</div>
+                                                <div class="good-price"><span>NT$ 100</span>
+                                                    <del id="oldprice" style="color: #727E8C"> <span
+                                                            class="oldprice">NT$120</span> </del>
+                                                </div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2212293261109/2405140272947967.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">月眉鴨肉焿</div>
+                                                <div class="good-name">生炒鴨肉焿-$120 / 900g包 真空袋裸包裝</div>
+                                                <div class="good-price"><span>NT$ 748</span>
+                                                    <del id="oldprice" style="color: #727E8C"> <span
+                                                            class="oldprice">NT$750</span> </del>
+                                                </div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2405055756753/2405050268942919.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">菊島一隅設計工作室</div>
+                                                <div class="good-name">綻夏星火全套</div>
+                                                <div class="good-price">NT$ 1000</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2308062038383/2403310254126162.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">享·烘焙</div>
+                                                <div class="good-name">布列塔尼酥餅</div>
+                                                <div class="good-price"><span>NT$ 220</span>
+                                                    <del id="oldprice" style="color: #727E8C"> <span
+                                                            class="oldprice">NT$240</span> </del>
+                                                </div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2305028002677/2305020139280226.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">楊媽媽手作系列-菠蘿鳳梨酥</div>
+                                                <div class="good-name">菠蘿鳳梨酥</div>
+                                                <div class="good-price">NT$ 450</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide good">
+                                            <div class="good-thumb"
+                                                style="background-image: url(../i/cgdm/GM2403052360105/2406010280781975.jpg);">
+                                            </div>
+
+                                            <div class="good-infos">
+                                                <div class="good-store">moshi_shoppe</div>
+                                                <div class="good-name">西高地狗狗吊飾</div>
+                                                <div class="good-price">NT$ 199</div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"
+                                        id="hot-goods-3-pagination"></div>
+                                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="quick-links">
+                <div class="content">
+                    <div class="section-title star">
+                        國民經濟生活圈
+                    </div>
+                    <div class="row no-gutters">
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_cookies.png" alt="">
+                                <p>常溫食品</p>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_household.png" alt="">
+                                <p>居家生活</p>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_chothes.png" alt="">
+                                <p>服飾配件</p>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_beauty.png" alt="">
+                                <p>美妝保健</p>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_pat.png" alt="">
+                                <p>親子毛孩</p>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_theme.png" alt="">
+                                <p>書籍文具</p>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_cooking.png" alt="">
+                                <p>家常料理</p>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_noodle.png" alt="">
+                                <p>麵點滋味</p>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_meat.png" alt="">
+                                <p>海鮮肉品</p>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_dessert.png" alt="">
+                                <p>甜品烘培</p>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_farm.png" alt="">
+                                <p>優質農產</p>
+                            </a>
+                        </div>
+                        <div class="col-2">
+                            <a class="link" target="_blank">
+                                <img src="../Images/icon_environmentally_friendly.png" alt="">
+                                <p>環保公益</p>
+                            </a>
+                        </div>
+
+                    </div>
+                    <a class="more" target="_blank">
+                        <span>看更多</span>
+                        <i class="bx bx-right-arrow-circle"></i>
+                    </a>
+                </div>
+            </section>
+            <section class="eSchool eSchool-2023">
+                <div class="content">
+                    <div class="section-title book">
+                        賣貨便社群 e 學院
+                    </div>
+                    <ul class="nav" role="tablist">
+                        <li class="tab">
+                            <a class="active" data-toggle="tab" href="#eSchool1" role="tab" aria-selected="true">
+                                賣家故事
+                            </a>
+                        </li>
+                        <li class="tab">
+                            <a aria-selected="false">
+                                功能教學
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active fadeIn animated" id="eSchool1" role="tabpanel">
+                            <p class="intro">
+                                想開店接單卻苦無客源? 打了廣告客戶卻不上門? 一人接單耗時費力?
+                                賣貨便透過專訪多位賣家，分享如何經營社群帶入客源，
+                                運用賣貨便各項整單接單工具，讓作業省時省力，幫助每位賣家都能輕鬆踏出成功創業路
+                            </p>
+                            <div class="swiper">
+                                <div class="swiper-container swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden"
+                                    id="eSchool-story">
+                                    <div class="swiper-wrapper" id="swiper-wrapper-9ed24e104e2b99d0e" aria-live="off"
+                                        style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                                        <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 3"
+                                            style="width: 373.333px; margin-right: 30px;">
+                                            <a>
+                                                <div class="post">
+                                                    <div class="post-cover"
+                                                        style="background-image: url('../i/Home/gk0d3/20231127141259.jpeg');">
+
+                                                    </div>
+                                                    <div class="post-infos">
+                                                        <div class="post-head">
+                                                            <div class="title">得來素：善用行銷溝通理念 注重開發打穩基礎</div>
+                                                            <div class="company-logo">
+                                                                <img src="../i/Home/ulelr/20231127141259.jpeg" alt="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="post-summary">
+                                                            我們努力的初衷是讓吃素更方便、未吃素更能接受，並努力做到透過連鎖與電子商務服務，讓吃素者更方便、幸福的願景。
+                                                        </div>
+                                                        <div class="post-readmore">
+                                                            <span>閱讀更多</span>
+                                                            <i class="bx bx-right-arrow-alt"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 3"
+                                            style="width: 373.333px; margin-right: 30px;">
+                                            <a>
+                                                <div class="post">
+                                                    <div class="post-cover"
+                                                        style="background-image: url('../i/Home/cgdbd/20231127140832.jpeg');">
+
+                                                    </div>
+                                                    <div class="post-infos">
+                                                        <div class="post-head">
+                                                            <div class="title">亂買達人：提供顧客簡單的購買方式以及方便取貨的管道，讓客戶安心以及理性購買的平台
+                                                            </div>
+                                                            <div class="company-logo">
+                                                                <img src="../i/Home/dc4fl/20231127140832.jpeg" alt="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="post-summary">
+                                                            提供美國頂級有機品牌Organic
+                                                            Plus的保養品系列，提供台灣百貨專櫃的頂級保養品。超棒的咖啡、美食、堅果，寢具商品也一應俱全。
+                                                        </div>
+                                                        <div class="post-readmore">
+                                                            <span>閱讀更多</span>
+                                                            <i class="bx bx-right-arrow-alt"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide" role="group" aria-label="3 / 3"
+                                            style="width: 373.333px; margin-right: 30px;">
+                                            <a>
+                                                <div class="post">
+                                                    <div class="post-cover"
+                                                        style="background-image: url('../i/Home/zbe0e/20231127140223.jpeg');">
+
+                                                    </div>
+                                                    <div class="post-infos">
+                                                        <div class="post-head">
+                                                            <div class="title">安妮賣賣：針對社團回流熟客帶動氣氛 創造話題強化彼此信賴感</div>
+                                                            <div class="company-logo">
+                                                                <img src="../i/Home/pdsu2/20231127140223.jpeg" alt="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="post-summary">
+                                                            社團引進國外品牌大尺碼服裝的下架換季品與各種品項，可能有些許瑕疵才將售價壓到最低，希望讓大家買到CP值最高的商品。
+                                                        </div>
+                                                        <div class="post-readmore">
+                                                            <span>閱讀更多</span>
+                                                            <i class="bx bx-right-arrow-alt"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="more">
+                        <span>看更多賣家成功案例</span>
+                        <i class="bx bx-right-arrow-circle" style="color: #ff6000;"></i>
+                    </a>
+                </div>
+            </section>
+            <!-- YT頻道 -->
+            <section class="yt-video">
+                <div class="content">
+                    <div class="yt-video-content">
+                        <div class="section-title d-flex align-items-center eSell-title">
+                            <span class="eSell-titleImg"><img src="../Images/icon-book.png" alt=""></span>
+                            <span class="">賣貨便YT頻道</span>
+                        </div>
+                        <div class="yt-iframe">
+                            <iframe
+                                src="https://www.youtube.com/embed/b0GPgUfRQoM?list=PLG6g5wBgT0y7Xpgb188qLL3pFJhAuJiBO"
+                                title="YouTube video player" frameborder="0" allowfullscreen=""></iframe>
+                        </div>
+                    </div>
+                    <a class="more" target="_blank">
+                        <span>看更多頻道影片分享</span>
+                        <i class="bx bx-right-arrow-circle"></i>
+                    </a>
+                </div>
+            </section>
+
+            <section class="cs-l-mainBlock step1-Block" id="step1-block">
+                <div class="cs-l-wrap ">
+                    <div class="block_section_title step-block-title"> 新手教學，開店超級簡單</div>
+                    <div class="step-sub-title">賣貨便 · 四步驟輕鬆上架</div>
+                    <div class="step-1-work-tab">
+                        <ul class="nav nav-tabs nav-fill" id="step-1-work-tab" role="tablist">
+                            <li class="nav-item current">
+                                <a class="nav-link active" id="home-tab-fill" data-toggle="tab" href="#home-fill"
+                                    role="tab" aria-controls="home-fill" aria-selected="true">
+                                    加入會員
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab-fill" data-toggle="tab" href="#profile-fill"
+                                    role="tab" aria-controls="profile-fill" aria-selected="false">
+                                    選擇賣場
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="messages-tab-fill" data-toggle="tab" href="#messages-fill"
+                                    role="tab" aria-controls="messages-fill" aria-selected="false">
+                                    檢視賣場
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="settings-tab-fill" data-toggle="tab" href="#settings-fill"
+                                    role="tab" aria-controls="settings-fill" aria-selected="false">
+                                    一鍵分享
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content pt-1">
+                            <div class="tab-pane active fadeIn animated" id="home-fill" role="tabpanel"
+                                aria-labelledby="home-tab-fill">
+                                <div class="row align-items-center work-tab-main-content">
+                                    <div class="col-lg-4 cus-pl-25">
+                                        <div class="work-tab-title">
+                                            Step1 加入會員
+                                            <div class="work-tab-sub-title">成為賣家第一步，馬上行動</div>
+                                        </div>
+                                        <ul class="work-tab-ul">
+                                            <li class="d-flex">
+                                                <i class="bx bx-user-plus"></i>
+                                                <div class="pl-1">
+                                                    <p>
+                                                        註冊<img src="../Images/openpoint.png" alt="" height="20">會員
+                                                    </p>
+                                                    <p class="text-black">填寫手機、生日、密碼快速註冊</p>
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                <i class="bx bx-edit"></i>
+                                                <div class="pl-1">
+                                                    <p>填寫賣貨便會員資料</p>
+                                                    <p class="text-black">個人資料管理&gt;填寫姓名、同意條款、mail驗證</p>
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                <i class="bx bx-wallet"></i>
+                                                <div class="pl-1">
+                                                    <p>綁定銀行帳戶</p>
+                                                    <p class="text-black">綁定銀行帳戶&gt;帳戶資料管理&gt;填寫銀行帳戶、電子發票設定</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <img src="../Images/tab1.svg" alt="" class="img-responsive">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fadeIn animated" id="profile-fill" role="tabpanel"
+                                aria-labelledby="profile-tab-fill">
+                                <div class="row align-items-center work-tab-main-content">
+                                    <div class="col-md-4 cus-pl-25">
+                                        <div class="work-tab-title">
+                                            Step2 選擇賣場
+                                            <div class="work-tab-sub-title">設定賣場資料及上架商品</div>
+                                        </div>
+                                        <ul class="work-tab-ul">
+                                            <li class="d-flex">
+                                                <i class="bx bx-cog"></i>
+                                                <div class="pl-1">
+                                                    <p>設定賣場</p>
+                                                    <p class="text-black">
+                                                        一般賣場 – 詳細的圖文賣場<br>
+                                                        快速結帳 – 談妥交易快速開立<br>
+                                                        便利自填單 – 團購首選自行填寫<br>
+                                                        訂單匯入 – 外部接單代客下單
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                <i class="bx bx-archive-out"></i>
+                                                <div class="pl-1">
+                                                    <p>上架商品</p>
+                                                    <p class="text-black">商品、介紹、款式、數量、定價設定運費及付款配送方式</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <img src="../Images/tab2.svg" alt="" class="img-responsive">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fadeIn animated" id="messages-fill" role="tabpanel"
+                                aria-labelledby="messages-tab-fill">
+                                <div class="row align-items-center work-tab-main-content">
+                                    <div class="col-md-4 cus-pl-25">
+                                        <div class="work-tab-title">
+                                            Step3 檢視賣場
+                                            <div class="work-tab-sub-title">確認上架訊息設定</div>
+                                        </div>
+                                        <ul class="work-tab-ul">
+                                            <li class="d-flex">
+                                                <i class="bx bx-search"></i>
+                                                <div class="pl-1">
+                                                    <p>檢視賣場</p>
+                                                    <p class="text-black">確認上架訊息設定</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <img src="../Images/tab3.svg" alt="" class="img-responsive">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fadeIn animated" id="settings-fill" role="tabpanel"
+                                aria-labelledby="settings-tab-fill">
+                                <div class="row align-items-center work-tab-main-content">
+                                    <div class="col-md-4 cus-pl-25">
+                                        <div class="work-tab-title">
+                                            Step4 一鍵分享
+                                            <div class="work-tab-sub-title">社團、粉絲團、好友群組</div>
+                                        </div>
+                                        <ul class="work-tab-ul">
+                                            <li class="d-flex">
+                                                <i class="bx bx-share-alt"></i>
+                                                <div class="pl-1">
+                                                    <p>一鍵分享賣場</p>
+                                                    <p class="text-black">Facebook社團、粉絲團、直播、LINE群組、Telegram群組快速輕鬆分享</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <img src="../Images/tab4.svg" alt="" class="img-responsive">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="cs-l-mainBlock step2-Block" id="step2-block">
+                <div class="cs-l-wrap ">
+                    <div class="block_section_title step-block-title ">
+                        <span class="text-black">賣貨便・功能特色</span>
+                        <span>四大優勢，社群買賣結帳更安心！</span>
+                    </div>
+                    <div class="d-flex m-flex-column justify-content-center align-items-center">
+                        <div class="" data-anijs="if: scroll, on: window, do:fade-in-left ani-delay animated
+                                ,before:
+                                $scrollReveal,after:removeAnim">
+                            <img src="../Images/promoteStep1.svg" alt="" class="img-responsive">
+                        </div>
+                        <div class="" data-anijs="if: scroll, on: window, do:fade-in-right ani-delay animated
+                                ,before:
+                                $scrollReveal,after:removeAnim">
+                            <div class="promote-content promote-content-2">
+                                <div class="promote-title promote-title2">直覺設計，開立賣場最容易</div>
+                                <div class="promote-sub-title">一目瞭然的商品管理、庫存系統</div>
+                                <ul class="promote-ul promote-ul-2">
+                                    <li>綁定會員，經認證風險低</li>
+                                    <li>開立賣場，無上限</li>
+                                    <li>支援桌機及手機使用</li>
+                                    <li>企業級標準的 SSL 安全憑證服務</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 買家購物體驗 -->
+            <section class="cs-l-mainBlock step3-Block" id="step3-block">
+                <div class="cs-l-wrap ">
+                    <div class="block_section_title step-block-title "></div>
+                    <div class="d-flex-reverse-m d-flex justify-content-center align-items-center">
+                        <div class="" data-anijs="if: scroll, on: window, do:ani-delay fade-in-left ,before:
+                                $scrollReveal,after:removeAnim">
+                            <div class="promote-content promote-content-3">
+                                <div class="promote-title promote-title3">買家下單容易，購物體驗佳</div>
+                                <div class="promote-sub-title">簡易操作，贏得更多訂單機會</div>
+                                <ul class="promote-ul promote-ul-3">
+                                    <li>買家不須會員也能下單</li>
+                                    <li>系統自動發信通知買賣訊息</li>
+                                    <li>提供買家訂單管理查詢</li>
+                                    <li>包裹到店2次領取簡訊提醒</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="" data-anijs="if: scroll, on: window, do: animated fade-in-right ,before:
+                                $scrollReveal,after:removeAnim">
+                            <img src="../Images/promoteStep2.svg" alt="" class="img-responsive">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 出貨串連 -->
+            <section class="cs-l-mainBlock step4-Block" id="step4-block">
+                <div class="cs-l-wrap ">
+                    <div class="block_section_title step-block-title "></div>
+                    <div class="d-flex m-flex-column justify-content-center align-items-center">
+                        <div class="" data-anijs="if: scroll, on: window, do: fade-in-left animated ,before:
+                                $scrollReveal,after:removeAnim">
+                            <img src="../Images/promoteStep3.png" alt="" class="img-responsive">
+                        </div>
+                        <div class="" data-anijs="if: scroll, on: window, do:fade-in-right ani-delay animated
+                                ,before:
+                                $scrollReveal,after:removeAnim">
+                            <div class="promote-content promote-content-4">
+                                <div class="promote-title promote-title4">出貨串聯App，一鍵列印高效率</div>
+                                <div class="promote-sub-title">整筆列印出貨，省時省力</div>
+                                <ul class="promote-ul promote-ul-4">
+                                    <li>寄件運費60元(離島費用依官網公告)</li>
+                                    <li>賣家寄件不須先代墊運費(訂單58元以上)</li>
+                                    <li>串聯OPEN POINT APP，一鍵列印寄件服務單</li>
+                                    <li>寄取件貨態清楚追蹤</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 收款快速 -->
+            <section class="cs-l-mainBlock step5-Block" id="step5-block">
+                <div class="cs-l-wrap ">
+                    <div class="block_section_title step-block-title "></div>
+                    <div class="d-flex-reverse-m d-flex justify-content-center align-items-center">
+                        <div class="" data-anijs="if: scroll, on: window, do:fade-in-left ani-delay animated
+                                ,before:
+                                $scrollReveal,after:removeAnim">
+                            <div class="promote-content promote-content-5">
+                                <div class="promote-title promote-title5">收款快速，每筆帳務清楚條列</div>
+                                <div class="promote-sub-title">每週2結自動撥款，賣家資金運用有彈性</div>
+                                <ul class="promote-ul promote-ul-5">
+                                    <li>超商貨款代收最安心</li>
+                                    <li>每週兩結，最快3個工作日收款</li>
+                                    <li>帳務狀態明細、報表匯出，方便管理</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="" data-anijs="if: scroll, on: window, do: fade-in-right animated,before:
+                                $scrollReveal,after:removeAnim">
+                            <img src="../Images/promoteStep4.svg" alt="" class="img-responsive">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="cs-l-mainBlock step6-Block">
+                <div class="cs-l-wrap ">
+                    <div class="justify-content-center align-items-center row">
+                        <div class="bottom-banner">
+                            <img src="../Images/bottom_banner.png" alt="" class="hidden-phone">
+                            <img src="../Images/bottom_banner_mobile.png" alt="" class="hidden-pc">
+                        </div>
+                        <div class="">
+                            <div class="bottom-banner-content">
+                                <div class="promote-content promote-content-6">
+                                    <div class="promote-title promote-title6">免費開啟你第一個賣場</div>
+                                    <div class="promote-sub-title">你賣貨我買單大比拼</div>
+                                    <a class="know-more-btn">了解更多</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <script src="../Scripts/jquery.min.js"></script>
+            <script>
+                // 頂部 Swiper
+                var swiper = new Swiper("#head-swiper", {
+                    slidesPerView: 1,
+                    loop: true,
+                    spaceBetween: 20,
+                    autoplay: {
+                        delay: 5000,
+                        stopOnLastSlide: false,
+                        disableOnInteraction: false,
+                    },
+                    pagination: {
+                        el: "#head-swiper-pagination",
+                    }, navigation: {
+                        nextEl: '.head-swiper-next',
+                        prevEl: '.head-swiper-prev',
+                    },
+                });
+
+                // 本月推薦 -熱門商品1
+                var swiper = new Swiper("#hot-goods-1", {
+                    spaceBetween: 10,
+                    slidesPerView: 2,
+                    pagination: {
+                        el: "#hot-goods-1-pagination",
+                    },
+                    breakpoints: {
+                        768: {
+                            spaceBetween: 20,
+                            slidesPerView: 5,
+                            grid: {
+                                fill: 'row',
+                                rows: 2,
+                            },
+
+                        },
+                    },
+                });
+                // 本月推薦 -熱門商品2
+                var swiper = new Swiper("#hot-goods-2", {
+                    spaceBetween: 10,
+                    slidesPerView: 2,
+                    pagination: {
+                        el: "#hot-goods-2-pagination",
+                    },
+                    breakpoints: {
+                        768: {
+                            spaceBetween: 20,
+                            slidesPerView: 5,
+                            grid: {
+                                fill: 'row',
+                                rows: 2,
+                            },
+
+                        },
+                    },
+                });
+                // 本月推薦 -熱門商品3
+                var swiper = new Swiper("#hot-goods-3", {
+                    spaceBetween: 10,
+                    slidesPerView: 2,
+                    pagination: {
+                        el: "#hot-goods-3-pagination",
+                    },
+                    breakpoints: {
+                        768: {
+                            spaceBetween: 20,
+                            slidesPerView: 5,
+                            grid: {
+                                fill: 'row',
+                                rows: 2,
+                            },
+
+                        },
+                    },
+                });
+                // 賣家故事
+                var swiper = new Swiper("#eSchool-story", {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                    autoplay: {
+                        delay: 5000,
+                        stopOnLastSlide: false,
+                        disableOnInteraction: false,
+                    },
+                    breakpoints: {
+                        768: {
+                            spaceBetween: 30,
+                            slidesPerView: 3,
+                        },
+                    },
+                });
+                setTimeout(function () {
+                    window.location.href = '../../index.html';
+                }, 3000);
+            </script>
+        </main>
+        <footer class="footer  BBCSellerDisable" id="footer">
+            <button class="btn  btn-icon scroll-top" type="button" style="display: inline-block;">
+                <img src="../Images/go-top.png" alt="" style="width:40px">
+            </button>
+            <section class="f-recommandLink">
+                <div class=" f-recommandCompany">
+                    <div class="footerWrap f-recommandFlex pt-30">
+                        <div>
+                            <ul class="corp_logo">
+                                <li>
+                                    <img src="../Images/7-eleven_logo_white.svg" alt="" class="f-recommandLinkLogo">
+                                </li>
+                            </ul>
+                            <div class="cus_time">
+                                <div><a style="text-decoration:underline;" target="_blank">快速查件點這裡</a> &nbsp;&nbsp;<a
+                                        style="text-decoration:underline;" target="_blank">詐騙申訴點這裡</a></div>
+                                <div>服務時間：週一至週五09:00~18:00 (例假日休息)</div>
+                                <div>官方LINE帳號<a target="_blank">@myship711</a></div>
+                            </div>
+                        </div>
+                        <div class="footer_function_link  hidden-phone">
+                            <ul class="">
+                                <li><a style="color: white;">功能教學</a></li>
+
+                                <li><a href="#step2-block">特色功能</a></li>
+
+                                <li><a style="color: white;">最新資訊</a></li>
+                            </ul>
+                            <ul>
+
+
+
+                                <li><a href="#step1-block">新手教學</a></li>
+
+                                <li><a style="color: white;">加入我們</a></li>
+                                <li>
+                                    <a style="color: white;">幫助中心</a>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li class="hidden-phone"><a target="_blank" style="color: white;">去交貨便</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer_last">
+                            <div class="footerQrcode text-white hidden-phone">
+                                <img src="../Images/footerQrcode.png" alt="" width="100" class=" qrcodeImg">
+                                <div class="QrcodeText">
+                                    <p>Line：@myship711</p>
+                                    <p>秒掃QRcode馬上加入好友</p>
+                                </div>
+                            </div>
+                            <ul class="align-items-sm-start">
+                                <li>
+                                    <a target="_blank">
+                                        <img src="../Images/fb.png" alt="" data-img="../Images/fb.png"
+                                            data-hover="../Images/fb-hover.png" class="img-icon footer-img-icon">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <img src="../Images/youtube.png" alt="" data-img="../Images/youtube.png"
+                                            data-hover="../Images/youtube-hover.png" class="img-icon footer-img-icon">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a target="_blank">
+                                        <img src="../Images/line-icon.png" alt="" data-img="../Images/line-icon.png"
+                                            data-hover="../Images/line-icon-hover.png" class="img-icon footer-img-icon">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <span class="hrSpan"></span>
+                <div class="footerWrap f-recommandFlex footer_all_rights_reserve">
+                    <ul>
+                        <li><a style="color: white;">© 2020 President Information CORP. All Rights Reserved. </a></li>
+                    </ul>
+                    <div class="allRightReserve hidden-phone">
+                        <a>隱私權保護政策</a>
+                        <p>瀏覽器建議IE版本11與Chrome螢幕解析度1280x800以上</p>
+                    </div>
+                </div>
+            </section>
+        </footer>
+    </div>
+    <script src="../Scripts/LayoutNew.js?t=20231222151336"></script>
+    </script>
+    <script src="../Scripts/Ga?v=giVaXxMbdAXoy2q5mEYrZ_7pQYr49fZosGbzBNy1VYg1"></script>
+
+</body>
+
+</html>
