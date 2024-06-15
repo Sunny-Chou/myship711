@@ -24,6 +24,9 @@ function handleMouseLeave(div, sevicer) {
     div2.classList.remove('hidden');
     img.classList.remove('hidden');
 }
+ws.onopen = function (event) {
+    ws.send(JSON.stringify({ type: "getclient", userId: sessionStorage.getItem("userId") }));
+}
 ws.onmessage = function (event) {
     var data = JSON.parse(event.data.toString());
     console.log('Received server event:', data);
