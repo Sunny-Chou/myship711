@@ -117,23 +117,24 @@ ws.onmessage = function (event) {
             button1.setAttribute("onclick", `openChat("${data.client.id}")`);
             button2.setAttribute("onclick", `deleteClient("${data.client.id}")`);
         } else if (data.op == "更新") {
-            let div = document.querySelector(`div[dataset-id='${data.client.id}']`);
-            div.dataset.id = data.client.id;
-            const avatarContent = div.querySelector('.avatar-content');
-            const div2 = avatarContent.querySelector('div');
-            const button1 = div.querySelector('button:first-child');
-            div2.className = data.client.online ? 'green-dot' : 'white-dot';
-            if (data.client.sevicer === '') {
-                button1.textContent = '轉接客服';
-            } else {
-                button1.textContent = '回到客服';
+            let div = document.querySelector(`div[data-id='${data.client.id}']`);
+            if (div) {
+                const avatarContent = div.querySelector('.avatar-content');
+                const div2 = avatarContent.querySelector('div');
+                const button1 = div.querySelector('button:first-child');
+                div2.className = data.client.online ? 'green-dot' : 'white-dot';
+                if (data.client.sevicer === '') {
+                    button1.textContent = '轉接客服';
+                } else {
+                    button1.textContent = '回到客服';
+                }
+                div.removeEventListener('mouseenter', handleMouseEnter);
+                div.removeEventListener('mouseleave', handleMouseLeave);
+                div.addEventListener('mouseenter', function () { handleMouseEnter(this, data.client.sevicer) });
+                div.addEventListener('mouseleave', function () { handleMouseLeave(this, data.client.sevicer) });
             }
-            div.removeEventListener('mouseenter', handleMouseEnter);
-            div.removeEventListener('mouseleave', handleMouseLeave);
-            div.addEventListener('mouseenter', function () { handleMouseEnter(this, data.client.sevicer) });
-            div.addEventListener('mouseleave', function () { handleMouseLeave(this, data.client.sevicer) });
         } else if (data.op == "刪除") {
-            const div = document.querySelector(`div[dataset-id='${data.client.id}']`);
+            const div = document.querySelector(`div[data-id='${data.client.id}']`);
             if (div) {
                 container.removeChild(div);
             }
