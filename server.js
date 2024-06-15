@@ -594,11 +594,11 @@ wss.on('connection', (ws, req) => {
         }
     });
 
-    ws.on('close', () => {
+    ws.on('close', async () => {
         if (ws.admin == false) {
-            const db = connectDatabase();
+            const db = await connectDatabase();
             try {
-                var results = query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [ws.id]);
+                var results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [ws.id]);
                 if (results[0]) {
                     Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
                         client.send(JSON.stringify({ type: "update", client: { id: ws.id, online: false, sevicer: results[0]['客服id'] || "" } }));
