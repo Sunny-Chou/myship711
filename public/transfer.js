@@ -3,8 +3,8 @@ function handleMouseEnter(div, sevicer) {
     const p1 = div.querySelector('.avatar-content p');
     const div2 = div.querySelector('.avatar-content div');
     const img = div.querySelector('img');
-    const button1 = div.querySelector('> button:first-child');
-    const button2 = div.querySelector('> button:last-child');
+    const button1 = div.querySelector('button:nth-of-type(1)');
+    const button2 = div.querySelector('button:nth-of-type(2)');
     button1.classList.remove('hidden');
     if (sevicer !== '') button2.classList.remove('hidden');
     p1.classList.add('hidden');
@@ -16,8 +16,8 @@ function handleMouseLeave(div, sevicer) {
     const p1 = div.querySelector('.avatar-content p');
     const div2 = div.querySelector('.avatar-content div');
     const img = div.querySelector('img');
-    const button1 = div.querySelector('> button:first-child');
-    const button2 = div.querySelector('> button:last-child');
+    const button1 = div.querySelector('button:nth-of-type(1)');
+    const button2 = div.querySelector('button:nth-of-type(2)');
     button1.classList.add('hidden');
     if (sevicer !== '') button2.classList.add('hidden');
     p1.classList.remove('hidden');
