@@ -121,7 +121,7 @@ ws.onmessage = function (event) {
             if (div) {
                 const avatarContent = div.querySelector('.avatar-content');
                 const div2 = avatarContent.querySelector('div');
-                const button1 = div.querySelector('button:first-child');
+                const button1 = div.querySelector('button:nth-of-type(1)');
                 div2.className = data.client.online ? 'green-dot' : 'white-dot';
                 if (data.client.sevicer === '') {
                     button1.textContent = '轉接客服';
