@@ -476,9 +476,9 @@ wss.on('connection', (ws, req) => {
                                     clientlist.push({ id: r['聊天室id'], online: true, sevicer: r['客服id'] });
                                 } else if (r['客服id'] == ws.id) {
                                     clientlist.push({ id: r['聊天室id'], online: false, sevicer: r['客服id'] });
-                                } else if (temp[0]) {
+                                } else if (temp[0]&&r['客服id']==null) {
                                     clientlist.push({ id: r['聊天室id'], online: true, sevicer: "" });
-                                } else {
+                                } else if(r['客服id']==null){
                                     clientlist.push({ id: r['聊天室id'], online: false, sevicer: "" });
                                 }
                             }
