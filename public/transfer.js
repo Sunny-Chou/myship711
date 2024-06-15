@@ -73,10 +73,9 @@ ws.onmessage = function (event) {
                 }
                 div.appendChild(button1);
                 div.appendChild(button2);
+                container.appendChild(div);
                 div.addEventListener('mouseenter', () => handleMouseEnter(div, client.sevicer));
                 div.addEventListener('mouseleave', () => handleMouseLeave(div, client.sevicer));
-                container.appendChild(div);
-
             });
         } else {
             alert(data.message);
@@ -123,7 +122,6 @@ ws.onmessage = function (event) {
             const avatarContent = div.querySelector('.avatar-content');
             const div2 = avatarContent.querySelector('div');
             const button1 = div.querySelector('button:first-child');
-            const button2 = div.querySelector('button:last-child');
             div2.className = data.client.online ? 'green-dot' : 'white-dot';
             if (data.client.sevicer === '') {
                 button1.textContent = '轉接客服';
