@@ -163,7 +163,7 @@ ws.onmessage = function (event) {
             alert(data.message);
         }
     } else if (data.type=="update") {
-        if(data.client.id==clientId){
+        if(data.op=="刪除"&&data.client.id==clientId){
             alert("客戶已不存在");
             window.close();
             window.location.href="transfer.html";
