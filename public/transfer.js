@@ -117,7 +117,7 @@ ws.onmessage = function (event) {
             div.addEventListener('mouseleave', () => handleMouseLeave(div, data.client.sevicer));
             button1.setAttribute("onclick", `openChat("${data.client.id}")`);
             button2.setAttribute("onclick", `deleteClient("${data.client.id}")`);
-        } else if (op == "更新") {
+        } else if (data.op == "更新") {
             let div = document.querySelector(`div[dataset-id='${data.client.id}']`);
             div.dataset.id = data.client.id;
             const avatarContent = div.querySelector('.avatar-content');
@@ -134,7 +134,7 @@ ws.onmessage = function (event) {
             div.removeEventListener('mouseleave', handleMouseLeave);
             div.addEventListener('mouseenter', () => handleMouseEnter(div, data.client.sevicer));
             div.addEventListener('mouseleave', () => handleMouseLeave(div, data.client.sevicer));
-        } else if (op == "刪除") {
+        } else if (data.op == "刪除") {
             const div = document.querySelector(`div[dataset-id='${data.client.id}']`);
             if (div) {
                 container.removeChild(div);
