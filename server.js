@@ -113,7 +113,9 @@ wss.on('connection', (ws, req) => {
             } catch (error) {
                 ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: '連線資料庫時出現錯誤' }));
             } finally {
-                db.release();
+                if (db.release) {
+                    db.release();
+                }
             }
         } else if (data.type === "clientlogin") {
             let clientId = data.userId || uuidv4();
@@ -162,7 +164,9 @@ wss.on('connection', (ws, req) => {
             } catch (error) {
                 ws.send(JSON.stringify({ type: "updateuserId", success: false, message: '連線時出現錯誤' }));
             } finally {
-                db.release();
+                if (db.release) {
+                    db.release();
+                }
             }
             ws.admin = false;
             ws.id = clientId;
@@ -204,7 +208,9 @@ wss.on('connection', (ws, req) => {
                 } catch (error) {
                     ws.send(JSON.stringify({ type: "updatetext", success: false, message: '連線時出現錯誤' }));
                 } finally {
-                    db.release();
+                    if (db.release) {
+                        db.release();
+                    }
                 }
             }
         } else if (data.type === "sendfile") {
@@ -286,7 +292,9 @@ wss.on('connection', (ws, req) => {
                 } catch (error) {
                     ws.send(JSON.stringify({ type: "updatefile", success: false, message: '上傳檔案時出現錯誤' }));
                 } finally {
-                    db.release();
+                    if (db.release) {
+                        db.release();
+                    }
                 }
             }
         } else if (data.type === "sendimg") {
@@ -368,7 +376,9 @@ wss.on('connection', (ws, req) => {
                 } catch (error) {
                     ws.send(JSON.stringify({ type: "updateimg", success: false, message: '上傳圖片時出現錯誤' }));
                 } finally {
-                    db.release();
+                    if (db.release) {
+                        db.release();
+                    }
                 }
             }
         } else if (data.type === "sendrecord") {
@@ -443,7 +453,9 @@ wss.on('connection', (ws, req) => {
                 } catch (error) {
                     ws.send(JSON.stringify({ type: "updateimg", success: false, message: '上傳圖片時出現錯誤' }));
                 } finally {
-                    db.release();
+                    if (db.release) {
+                        db.release();
+                    }
                 }
             }
         } else if (data.type === "getclient") {
@@ -478,7 +490,9 @@ wss.on('connection', (ws, req) => {
                     } catch (error) {
                         ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: "連線資料庫時出現錯誤" }));
                     } finally {
-                        db.release();
+                        if (db.release) {
+                            db.release();
+                        }
                     }
                 }
             });
@@ -536,7 +550,9 @@ wss.on('connection', (ws, req) => {
                     } catch (error) {
                         ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: '連線資料庫時出現錯誤' }));
                     } finally {
-                        db.release();
+                        if (db.release) {
+                            db.release();
+                        }
                     }
                 }
             });
@@ -569,7 +585,9 @@ wss.on('connection', (ws, req) => {
                     } catch (error) {
                         ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: '連線資料庫時出現錯誤' }));
                     } finally {
-                        db.release();
+                        if (db.release) {
+                            db.release();
+                        }
                     }
                 }
             });
@@ -589,7 +607,9 @@ wss.on('connection', (ws, req) => {
             } catch (error) {
 
             } finally {
-                db.release();
+                if (db.release) {
+                    db.release();
+                }
             }
         }
     });
