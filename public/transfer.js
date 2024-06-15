@@ -74,8 +74,8 @@ ws.onmessage = function (event) {
                 div.appendChild(button1);
                 div.appendChild(button2);
                 container.appendChild(div);
-                div.addEventListener('mouseenter', () => handleMouseEnter(div, client.sevicer));
-                div.addEventListener('mouseleave', () => handleMouseLeave(div, client.sevicer));
+                div.addEventListener('mouseenter', function () { handleMouseEnter(this, client.sevicer) });
+                div.addEventListener('mouseleave', function () { handleMouseLeave(this, client.sevicer) });
             });
         } else {
             alert(data.message);
@@ -112,8 +112,8 @@ ws.onmessage = function (event) {
             } else {
                 button1.textContent = '回到客服';
             }
-            div.addEventListener('mouseenter', () => handleMouseEnter(div, data.client.sevicer));
-            div.addEventListener('mouseleave', () => handleMouseLeave(div, data.client.sevicer));
+            div.addEventListener('mouseenter', function () { handleMouseEnter(this, data.client.sevicer) });
+            div.addEventListener('mouseleave', function () { handleMouseLeave(this, data.client.sevicer) });
             button1.setAttribute("onclick", `openChat("${data.client.id}")`);
             button2.setAttribute("onclick", `deleteClient("${data.client.id}")`);
         } else if (data.op == "更新") {
@@ -130,8 +130,8 @@ ws.onmessage = function (event) {
             }
             div.removeEventListener('mouseenter', handleMouseEnter);
             div.removeEventListener('mouseleave', handleMouseLeave);
-            div.addEventListener('mouseenter', () => handleMouseEnter(div, data.client.sevicer));
-            div.addEventListener('mouseleave', () => handleMouseLeave(div, data.client.sevicer));
+            div.addEventListener('mouseenter', function () { handleMouseEnter(this, data.client.sevicer) });
+            div.addEventListener('mouseleave', function () { handleMouseLeave(this, data.client.sevicer) });
         } else if (data.op == "刪除") {
             const div = document.querySelector(`div[dataset-id='${data.client.id}']`);
             if (div) {
