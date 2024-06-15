@@ -601,7 +601,7 @@ wss.on('connection', (ws, req) => {
                 var results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [ws.id]);
                 if (results[0]) {
                     Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
-                        client.send(JSON.stringify({ type: "update", client: { id: ws.id, online: false, sevicer: results[0]['客服id'] || "" } }));
+                        client.send(JSON.stringify({ type: "update", op: "更新", client: { id: ws.id, online: false, sevicer: results[0]['客服id'] || "" } }));
                     });
                 }
             } catch (error) {
