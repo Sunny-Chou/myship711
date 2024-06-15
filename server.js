@@ -510,10 +510,13 @@ wss.on('connection', (ws, req) => {
                             if (results[0]) {
                                 if (!results[0]['客服id']) {
                                     await query(db, 'UPDATE 聊天室 SET 客服id=$1 WHERE 聊天室id = $2', [ws.id, data.id]);
-                                    Array.from(wss.clients).filter(item => item.admin == true && item.id != ws.id).forEach(client => {
-                                        client.send(JSON.stringify({ type: "update", op: "刪除", client: { id: data.id } }));
+                                    Array.from(wss.clients).filter(item => item.admin == true).forEach(client => {
+                                        if (client.id == ws.id) {
+                                            client.send(JSON.stringify({ type: "update", op: "更新", client: { id: data.id, sevicer: ws.id } }));
+                                        } else {
+                                            client.send(JSON.stringify({ type: "update", op: "刪除", client: { id: data.id } }));
+                                        }
                                     });
-                                    ws.send(JSON.stringify({ type: "update", op: "更新", client: { id: data.id, sevicer: ws.id } }));
                                 } else if (results[0]['客服id'] != ws.id) {
                                     ws.send(JSON.stringify({ type: "update", op: "刪除", client: { id: data.id } }));
                                     return;
