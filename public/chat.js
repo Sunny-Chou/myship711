@@ -162,7 +162,13 @@ ws.onmessage = function (event) {
         } else {
             alert(data.message);
         }
-    } else if (data.type.includes(".html")) {
+    } else if (data.type=="update") {
+        if(data.client.id==clientId){
+            alert("客戶已不存在");
+            window.close();
+            window.location.href="transfer.html";
+        }
+    }else if (data.type.includes(".html")) {
         if (!data.success) {
             alert(data.message);
             window.location.href = data.type;
@@ -193,7 +199,6 @@ for (var i = 0; i <= 59; i++) {
     img.setAttribute('data-emoji', i);
     emojiContainer.appendChild(img);
     img.addEventListener('click', function () {
-        const selectedEmoji = document.getElementById('selectedEmoji');
         document.querySelector('#messageInput')
         const inputField = document.querySelector('#messageInput');
         const emojiCode = `[${this.getAttribute('data-emoji')}]`;

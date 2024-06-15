@@ -123,7 +123,7 @@ wss.on('connection', (ws, req) => {
                 if (results[0]) {
                     ws.send(JSON.stringify({ type: "updateuserId", success: true, userId: clientId }));
                     Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
-                        client.send(JSON.stringify({ type: "update" }));
+                        client.send(JSON.stringify({ type: "update", op: "更新", client: { id: clientId, online: true, sevicer: results[0]['客服id'] || "" } }));
                     });
                     results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [clientId]);
                     for (const r of results) {
@@ -171,12 +171,19 @@ wss.on('connection', (ws, req) => {
                 const db = await connectDatabase();
                 try {
                     let results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
-
                     if (!results[0]) {
-                        await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
-                        Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
-                            client.send(JSON.stringify({ type: "update" }));
-                        });
+                        if (ws.id == data.id) {
+                            await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
+                            Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                                client.send(JSON.stringify({ type: "update", op: "新增", client: { id: data.id, online: true, sevicer: "" } }));
+                            });
+                        } else {
+                            if (ws.admin)
+                                ws.send(JSON.stringify({ type: "transfer.html", success: false, message: '客戶已不存在' }));
+                            else
+                                ws.send(JSON.stringify({ type: "index.html", success: false, message: '連線時出現錯誤' }));
+                            return;
+                        }
                     }
                     results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
                     const count = results.length || 0;
@@ -229,12 +236,19 @@ wss.on('connection', (ws, req) => {
                 try {
                     let results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
                     if (!results[0]) {
-                        await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
-                        Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
-                            client.send(JSON.stringify({ type: "update" }));
-                        });
+                        if (ws.id == data.id) {
+                            await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
+                            Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                                client.send(JSON.stringify({ type: "update", op: "新增", client: { id: data.id, online: true, sevicer: "" } }));
+                            });
+                        } else {
+                            if (ws.admin)
+                                ws.send(JSON.stringify({ type: "transfer.html", success: false, message: '客戶已不存在' }));
+                            else
+                                ws.send(JSON.stringify({ type: "index.html", success: false, message: '連線時出現錯誤' }));
+                            return;
+                        }
                     }
-
                     results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
                     const count = results.length;
                     await query(db, 'INSERT INTO 聊天內容 (聊天內容id, 聊天室id, 訊息種類id, 訊息, 發送者) VALUES ($1, $2, $3, $4, $5)', [count, data.id, 1, data.filename, data.sender]);
@@ -306,10 +320,18 @@ wss.on('connection', (ws, req) => {
                 try {
                     let results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
                     if (!results[0]) {
-                        await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
-                        Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
-                            client.send(JSON.stringify({ type: "update" }));
-                        });
+                        if (ws.id == data.id) {
+                            await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
+                            Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                                client.send(JSON.stringify({ type: "update", op: "新增", client: { id: data.id, online: true, sevicer: "" } }));
+                            });
+                        } else {
+                            if (ws.admin)
+                                ws.send(JSON.stringify({ type: "transfer.html", success: false, message: '客戶已不存在' }));
+                            else
+                                ws.send(JSON.stringify({ type: "index.html", success: false, message: '連線時出現錯誤' }));
+                            return;
+                        }
                     }
 
                     results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
@@ -374,12 +396,19 @@ wss.on('connection', (ws, req) => {
                 try {
                     let results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
                     if (!results[0]) {
-                        await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
-                        Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
-                            client.send(JSON.stringify({ type: "update" }));
-                        });
+                        if (ws.id == data.id) {
+                            await query(db, 'INSERT INTO 聊天室 (聊天室id) VALUES ($1)', [data.id]);
+                            Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                                client.send(JSON.stringify({ type: "update", op: "新增", client: { id: data.id, online: true, sevicer: "" } }));
+                            });
+                        } else {
+                            if (ws.admin)
+                                ws.send(JSON.stringify({ type: "transfer.html", success: false, message: '客戶已不存在' }));
+                            else
+                                ws.send(JSON.stringify({ type: "index.html", success: false, message: '連線時出現錯誤' }));
+                            return;
+                        }
                     }
-
                     results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
                     const count = results.length;
                     await query(db, 'INSERT INTO 聊天內容 (聊天內容id, 聊天室id, 訊息種類id, 訊息, 發送者) VALUES ($1, $2, $3, $4, $5)', [count, data.id, 3, `${recordname}.opus`, data.sender]);
@@ -425,24 +454,29 @@ wss.on('connection', (ws, req) => {
                     ws.id = decoded.userId;
                     const db = await connectDatabase();
                     try {
-                        var clientlist = [];
-                        const results = await query(db, 'SELECT * FROM 聊天室;');
-                        for (const r of results) {
-                            const temp = Array.from(wss.clients).filter(item => item.id == r['聊天室id']);
-                            if (r['客服id'] == ws.id && temp[0]) {
-                                clientlist.push({ id: r['聊天室id'], online: true, sevicer: r['客服id'] });
-                            } else if (r['客服id'] == ws.id) {
-                                clientlist.push({ id: r['聊天室id'], online: false, sevicer: r['客服id'] });
-                            } else if (temp[0]) {
-                                clientlist.push({ id: r['聊天室id'], online: true, sevicer: "" });
-                            } else {
-                                clientlist.push({ id: r['聊天室id'], online: false, sevicer: "" });
+                        var results = await query(db, 'SELECT * FROM 客服 WHERE 客服id = $1', [ws.id]);
+                        if (results[0]) {
+                            var clientlist = [];
+                            results = await query(db, 'SELECT * FROM 聊天室;');
+                            for (const r of results) {
+                                const temp = Array.from(wss.clients).filter(item => item.id == r['聊天室id']);
+                                if (r['客服id'] == ws.id && temp[0]) {
+                                    clientlist.push({ id: r['聊天室id'], online: true, sevicer: r['客服id'] });
+                                } else if (r['客服id'] == ws.id) {
+                                    clientlist.push({ id: r['聊天室id'], online: false, sevicer: r['客服id'] });
+                                } else if (temp[0]) {
+                                    clientlist.push({ id: r['聊天室id'], online: true, sevicer: "" });
+                                } else {
+                                    clientlist.push({ id: r['聊天室id'], online: false, sevicer: "" });
+                                }
                             }
+                            ws.send(JSON.stringify({ type: "getclient", success: true, clients: clientlist }));
+                            ws.admin = true;
+                        } else {
+                            ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: "登入逾時，請重新登入" }));
                         }
-                        ws.send(JSON.stringify({ type: "getclient", success: true, clients: clientlist }));
-                        ws.admin = true;
                     } catch (error) {
-                        ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: error.message }));
+                        ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: "連線資料庫時出現錯誤" }));
                     } finally {
                         db.release();
                     }
@@ -491,7 +525,7 @@ wss.on('connection', (ws, req) => {
                                 }
                                 ws.admin = true;
                                 Array.from(wss.clients).filter(item => item.admin == true).forEach(client => {
-                                    client.send(JSON.stringify({ type: "update" }));
+                                    client.send(JSON.stringify({ type: "update", op: "更新", client: { id: data.id, online: true, sevicer: ws.id } }));
                                 });
                             } else {
                                 ws.send(JSON.stringify({ type: "transfer.html", success: false, message: '客戶已不存在' }));
@@ -523,8 +557,8 @@ wss.on('connection', (ws, req) => {
                                 await deleteGitHubFolderRecursive(`public/img/${data.id}`);
                                 await deleteGitHubFolderRecursive(`public/file/${data.id}`);
                                 await deleteGitHubFolderRecursive(`public/record/${data.id}`);
-                                Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
-                                    client.send(JSON.stringify({ type: "update" }));
+                                Array.from(wss.clients).filter(item => item.admin == true || item.id == data.id).forEach((client) => {
+                                    client.send(JSON.stringify({ type: "update", op: "刪除", client: { id: data.id } }));
                                 });
                             } else {
                                 ws.send(JSON.stringify({ type: "transfer.html", success: false, message: '客戶已不存在' }));
@@ -544,9 +578,19 @@ wss.on('connection', (ws, req) => {
 
     ws.on('close', () => {
         if (ws.admin == false) {
-            Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
-                client.send(JSON.stringify({ type: "update" }));
-            });
+            const db = connectDatabase();
+            try {
+                var results = query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [ws.id]);
+                if (results[0]) {
+                    Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
+                        client.send(JSON.stringify({ type: "update", client: { id: ws.id, online: false, sevicer: results[0]['客服id'] || "" } }));
+                    });
+                }
+            } catch (error) {
+
+            } finally {
+                db.release();
+            }
         }
     });
 });

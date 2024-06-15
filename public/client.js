@@ -175,6 +175,10 @@ ws.onmessage = function (event) {
         } else {
             alert(data.message);
         }
+    } else if (data.type == "update") {
+        if (data.op == "刪除" && data.client.id == getCookie("userId")) {
+            location.reload();
+        }
     } else if (data.type.includes(".html")) {
         alert(data.message);
         window.location.href = data.type;
