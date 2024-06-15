@@ -5,11 +5,11 @@ function handleMouseEnter(div, sevicer) {
     const img = div.querySelector('img');
     const button1 = div.querySelector('button:first-child');
     const button2 = div.querySelector('button:last-child');
-    button1.classList.remove('hidden');
+    
     if (sevicer !== '') button2.classList.remove('hidden');
     p1.classList.add('hidden');
     div2.classList.add('hidden');
-    img.classList.add('hidden');
+    img.classList.add('hidden');button1.classList.remove('hidden');
 }
 
 function handleMouseLeave(div, sevicer) {
@@ -18,11 +18,11 @@ function handleMouseLeave(div, sevicer) {
     const img = div.querySelector('img');
     const button1 = div.querySelector('button:first-child');
     const button2 = div.querySelector('button:last-child');
-    button1.classList.add('hidden');
+    
     if (sevicer !== '') button2.classList.add('hidden');
     p1.classList.remove('hidden');
     div2.classList.remove('hidden');
-    img.classList.remove('hidden');
+    img.classList.remove('hidden');button1.classList.add('hidden');
 }
 ws.onopen = function (event) {
     ws.send(JSON.stringify({ type: "getclient", userId: sessionStorage.getItem("userId") }));
