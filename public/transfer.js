@@ -122,16 +122,19 @@ ws.onmessage = function (event) {
                 const avatarContent = div.querySelector('.avatar-content');
                 const div2 = avatarContent.querySelector('div');
                 const button1 = div.querySelector('button:nth-of-type(1)');
-                div2.className = data.client.online ? 'green-dot' : 'white-dot';
-                if (data.client.sevicer === '') {
-                    button1.textContent = '轉接客服';
-                } else {
-                    button1.textContent = '回到客服';
+                if (data.client.online != undefined)
+                    div2.className = data.client.online ? 'green-dot' : 'white-dot';
+                if (data.client.sevicer != undefined) {
+                    if (data.client.sevicer === '') {
+                        button1.textContent = '轉接客服';
+                    } else {
+                        button1.textContent = '回到客服';
+                    }
+                    div.removeEventListener('mouseenter', handleMouseEnter);
+                    div.removeEventListener('mouseleave', handleMouseLeave);
+                    div.addEventListener('mouseenter', function () { handleMouseEnter(this, data.client.sevicer) });
+                    div.addEventListener('mouseleave', function () { handleMouseLeave(this, data.client.sevicer) });
                 }
-                div.removeEventListener('mouseenter', handleMouseEnter);
-                div.removeEventListener('mouseleave', handleMouseLeave);
-                div.addEventListener('mouseenter', function () { handleMouseEnter(this, data.client.sevicer) });
-                div.addEventListener('mouseleave', function () { handleMouseLeave(this, data.client.sevicer) });
             }
         } else if (data.op == "刪除") {
             const div = document.querySelector(`div[data-id='${data.client.id}']`);

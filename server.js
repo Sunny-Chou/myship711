@@ -125,7 +125,7 @@ wss.on('connection', (ws, req) => {
                 if (results[0]) {
                     ws.send(JSON.stringify({ type: "updateuserId", success: true, userId: clientId }));
                     Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
-                        client.send(JSON.stringify({ type: "update", op: "更新", client: { id: clientId, online: true, sevicer: results[0]['客服id'] || "" } }));
+                        client.send(JSON.stringify({ type: "update", op: "更新", client: { id: clientId, online: true } }));
                     });
                     results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [clientId]);
                     for (const r of results) {
@@ -508,7 +508,16 @@ wss.on('connection', (ws, req) => {
                         if (results[0]) {
                             results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [data.id]);
                             if (results[0]) {
-                                await query(db, 'UPDATE 聊天室 SET 客服id=$1 WHERE 聊天室id = $2', [ws.id, data.id]);
+                                if (!results[0]['客服id']) {
+                                    await query(db, 'UPDATE 聊天室 SET 客服id=$1 WHERE 聊天室id = $2', [ws.id, data.id]);
+                                    Array.from(wss.clients).filter(item => item.admin == true && item.id != ws.id).forEach(client => {
+                                        client.send(JSON.stringify({ type: "update", op: "刪除", client: { id: data.id } }));
+                                    });
+                                    ws.send(JSON.stringify({ type: "update", op: "更新", client: { id: data.id, sevicer: ws.id } }));
+                                } else if (results[0]['客服id'] != ws.id) {
+                                    ws.send(JSON.stringify({ type: "update", op: "刪除", client: { id: data.id } }));
+                                    return;
+                                }
                                 results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
                                 for (const r of results) {
                                     if (r['訊息種類id'] == 0) {
@@ -538,9 +547,6 @@ wss.on('connection', (ws, req) => {
                                     }
                                 }
                                 ws.admin = true;
-                                Array.from(wss.clients).filter(item => item.admin == true).forEach(client => {
-                                    client.send(JSON.stringify({ type: "update", op: "更新", client: { id: data.id, online: true, sevicer: ws.id } }));
-                                });
                             } else {
                                 ws.send(JSON.stringify({ type: "transfer.html", success: false, message: '客戶已不存在' }));
                             }
@@ -601,7 +607,7 @@ wss.on('connection', (ws, req) => {
                 var results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [ws.id]);
                 if (results[0]) {
                     Array.from(wss.clients).filter(item => item.admin == true).forEach((client) => {
-                        client.send(JSON.stringify({ type: "update", op: "更新", client: { id: ws.id, online: false, sevicer: results[0]['客服id'] || "" } }));
+                        client.send(JSON.stringify({ type: "update", op: "更新", client: { id: ws.id, online: false } }));
                     });
                 }
             } catch (error) {
