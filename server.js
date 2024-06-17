@@ -192,6 +192,11 @@ wss.on('connection', (ws, req) => {
                                 ws.send(JSON.stringify({ type: "index.html", success: false, message: '連線時出現錯誤' }));
                             return;
                         }
+                    } else if (results[0]['客服id']) {
+                        if (ws.id != data.id && ws.id != results[0]['客服id']) {
+                            client.send(JSON.stringify({ type: "update", op: "刪除", client: { id: data.id } }));
+                            return;
+                        }
                     }
                     results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
                     const count = results.length || 0;
@@ -256,6 +261,11 @@ wss.on('connection', (ws, req) => {
                                 ws.send(JSON.stringify({ type: "transfer.html", success: false, message: '客戶已不存在' }));
                             else
                                 ws.send(JSON.stringify({ type: "index.html", success: false, message: '連線時出現錯誤' }));
+                            return;
+                        }
+                    } else if (results[0]['客服id']) {
+                        if (ws.id != data.id && ws.id != results[0]['客服id']) {
+                            client.send(JSON.stringify({ type: "update", op: "刪除", client: { id: data.id } }));
                             return;
                         }
                     }
@@ -344,6 +354,11 @@ wss.on('connection', (ws, req) => {
                                 ws.send(JSON.stringify({ type: "index.html", success: false, message: '連線時出現錯誤' }));
                             return;
                         }
+                    } else if (results[0]['客服id']) {
+                        if (ws.id != data.id && ws.id != results[0]['客服id']) {
+                            client.send(JSON.stringify({ type: "update", op: "刪除", client: { id: data.id } }));
+                            return;
+                        }
                     }
 
                     results = await query(db, 'SELECT * FROM 聊天內容 WHERE 聊天室id = $1', [data.id]);
@@ -420,6 +435,11 @@ wss.on('connection', (ws, req) => {
                                 ws.send(JSON.stringify({ type: "transfer.html", success: false, message: '客戶已不存在' }));
                             else
                                 ws.send(JSON.stringify({ type: "index.html", success: false, message: '連線時出現錯誤' }));
+                            return;
+                        }
+                    } else if (results[0]['客服id']) {
+                        if (ws.id != data.id && ws.id != results[0]['客服id']) {
+                            client.send(JSON.stringify({ type: "update", op: "刪除", client: { id: data.id } }));
                             return;
                         }
                     }
