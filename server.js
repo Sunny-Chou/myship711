@@ -52,7 +52,7 @@ async function deleteGitHubFolderRecursive(FOLDER_TO_DELETE) {
             method: 'POST',
             headers,
             data: {
-                message: 'Committing with GitHub\'s API :fire:',
+                message: '刪除聊天室',
                 tree: newTreeSha,
                 parents: [currentCommitSha],
             },

@@ -14,7 +14,6 @@ ws.onopen = function (event) {
 }
 ws.onmessage = function (event) {
     var data = JSON.parse(event.data.toString());
-    console.log('Received server event:', data);
     if (data.type == "updatefile") {
         if (data.success) {
             const chatBody = document.getElementById('chat-body');
@@ -240,7 +239,6 @@ fileInput.addEventListener('change', function () {
 const imgButton = document.getElementById('image-button');
 const imgInput = document.getElementById('imgInput');
 imgButton.addEventListener('click', function () {
-    console.log(imgInput)
     imgInput.click();
 });
 

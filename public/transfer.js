@@ -29,7 +29,6 @@ ws.onopen = function (event) {
 }
 ws.onmessage = function (event) {
     var data = JSON.parse(event.data.toString());
-    console.log('Received server event:', data);
     if (data.type == "getclient") {
         const container = document.getElementById('avatars');
         container.innerHTML = '';
