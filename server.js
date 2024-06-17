@@ -100,13 +100,17 @@ wss.on('connection', (ws, req) => {
         data = JSON.parse(data.toString());
         console.log(`[Message from client ${ws.id}] data: `, data);
         if (data.type === "sevicerlogin") {
-            const md5Hash = crypto.createHash('md5').update(data.password).digest('hex');
             let db = await connectDatabase();
             try {
-                const results = await query(db, 'SELECT * FROM 客服 WHERE 客服id = $1 AND 密碼 = $2', [data.userId, md5Hash]);
+                const results = await query(db, 'SELECT * FROM 客服 WHERE 客服id = $1', [data.userId]);
                 if (results[0]) {
-                    ws.send(JSON.stringify({ type: "sevicerlogin", success: true, userId: generateToken(data.userId) }));
-                    ws.admin = true;
+                    const shaHash = crypto.createHash('sha256').update(data.password + results[0]['鹽值']).digest('hex');
+                    if (shaHash === results[0]['密碼']) {
+                        ws.send(JSON.stringify({ type: "sevicerlogin", success: true, userId: generateToken(data.userId) }));
+                        ws.admin = true;
+                    } else {
+                        ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: '帳號密碼錯誤！' }));
+                    }
                 } else {
                     ws.send(JSON.stringify({ type: "cslogin.html", success: false, message: '帳號密碼錯誤！' }));
                 }
@@ -476,9 +480,9 @@ wss.on('connection', (ws, req) => {
                                     clientlist.push({ id: r['聊天室id'], online: true, sevicer: r['客服id'] });
                                 } else if (r['客服id'] == ws.id) {
                                     clientlist.push({ id: r['聊天室id'], online: false, sevicer: r['客服id'] });
-                                } else if (temp[0]&&r['客服id']==null) {
+                                } else if (temp[0] && r['客服id'] == null) {
                                     clientlist.push({ id: r['聊天室id'], online: true, sevicer: "" });
-                                } else if(r['客服id']==null){
+                                } else if (r['客服id'] == null) {
                                     clientlist.push({ id: r['聊天室id'], online: false, sevicer: "" });
                                 }
                             }
