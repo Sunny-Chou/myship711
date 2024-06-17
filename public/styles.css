@@ -420,7 +420,7 @@ p {
     }
 
     .chat-section {
-        max-height: 800px;
+        max-height: 450px;
         border-right: none;
         border-bottom: 1px solid #ddd;
     }
