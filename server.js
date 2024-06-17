@@ -158,7 +158,7 @@ wss.on('connection', (ws, req) => {
                 } else {
                     do {
                         clientId = uuidv4();
-                    } while (results = await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [clientId])[0]);
+                    } while (await query(db, 'SELECT * FROM 聊天室 WHERE 聊天室id = $1', [clientId])[0]);
                     ws.send(JSON.stringify({ type: "updateuserId", success: true, userId: clientId }));
                 }
             } catch (error) {
