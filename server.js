@@ -135,7 +135,7 @@ wss.on('connection', (ws, req) => {
                             ws.send(JSON.stringify({
                                 success: true,
                                 type: "updatefile",
-                                url: `http://myship7-11.myvnc.comhttps://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/file/${r['聊天室id']}/${r['訊息']}`,
+                                url: `https://raw.githubusercontent.com/Sunny-Chou/myship711/main/public/file/${r['聊天室id']}/${r['訊息']}`,
                                 filename: r['訊息'],
                                 sender: r['發送者']
                             }));
